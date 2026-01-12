@@ -9,7 +9,7 @@
 *italic text*
 ~strikethrough~
 <sub>subscript text</sub>
-<sup>superscript text</sub>
+<sup>superscript text</sup>
 <ins>underline</ins>
 > indented and grayed text (for quotes)
 
