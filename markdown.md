@@ -5,6 +5,14 @@
 ###### enough!
 
 
+**bold text**
+*italic text*
+~strikethrough~
+<sub>subscript text</sub>
+<sup>superscript text</sub>
+<ins>underline</ins>
+> indented and grayed text (for quotes)
+
 
 Here's an image:
 
@@ -22,6 +30,10 @@ for (TherapyRobot therapyRobot : robotList){
     therapyRobot.giveHug(patient)
 }
 ```
+
+This is a `command` that can be executed.
+Visualize colors like `#0969DA`
+
 
 Here's a task list to work through:
 - [x] Wake up
