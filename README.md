@@ -2,13 +2,10 @@
 
 [My Notes](notes.md)
 
-A brief description of the application here. Tic tac toe can get a little boring, but playing more complex games like league of legends or games that require intense study like chess can seem pretty overwhelming. If you want a way to prove your dominance over your friends without the time commitment of improving mechanical skills or the study and memorization of patterns, then Dark Age Duels is the game for you! Simple medieval-themed classes and attacks provide a simple yet entertaining head-to-head duel where outsmarting your opponent is the key to victory!
+A brief description of the application here. 
 
 > [!NOTE]
 > This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
-
-> [!NOTE]
-> If you are not familiar with Markdown then you should review the [documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) before continuing.
 
 ## 🚀 Specification Deliverable
 
@@ -18,20 +15,20 @@ A brief description of the application here. Tic tac toe can get a little boring
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
+- [x] A concise and compelling elevator pitch
 - [ ] Description of key features
 - [ ] Description of how you will use each technology
 - [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
-### Elevator pitch
+### 🛗 Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Tic tac toe can get a little boring, but playing more complex games like league of legends or games that require intense study like chess can seem pretty overwhelming. If you want a way to prove your dominance over your friends without the time commitment of improving mechanical skills or the study and memorization of patterns, then Dark Age Duels is the game for you! Simple medieval-themed classes and attacks provide a simple yet entertaining head-to-head duel where outsmarting your opponent is the key to victory!
 
-### Design
+### 📝 Design
 
 ![Design image](placeholder.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Here is a sequence diagram that represents how a match between two people might play out.
 
 ```mermaid
 sequenceDiagram
@@ -40,13 +37,20 @@ sequenceDiagram
     You->>Website: Replace this with your design
 ```
 
-### Key features
+### 🔑 Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure registration and login using HTTPS
+- Ability to create and join a match as a certain class of warrior
+- Ability to interact with the other player in your match in turn-based combat
+- Display of your character and the opponents character, as well as your available moves that turn
+- Health/mana totals displayed
+- Win/Loss ratio persistently stored
+- Ability to join a match as an observer
+- Receive an update when your opponent has selected their action for that turn
+- Receive an update when the turn is evaluated which displays the change in life/mana totals for you and your opponent and the actions used by both.
+- Ability to forfeit a match
 
-### Technologies
+### 💻 Technologies
 
 I am going to use the required technologies in the following ways.
 
