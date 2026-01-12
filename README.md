@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-A brief description of the application here. Tic tac toe can get a little boring, but playing more complex games like league of legends or games that require intense study like chess can seem pretty overwhelming. If you want a way to prove your dominance over your friends without the time commitment of improving mechanical skills or the study and memorization of patterns, then Dark Age Duels is the game for you! Simple classes and attacks provide a simple yet entertaining head-to-head duel where outsmarting your opponent is the key to victory!
+A brief description of the application here. Tic tac toe can get a little boring, but playing more complex games like league of legends or games that require intense study like chess can seem pretty overwhelming. If you want a way to prove your dominance over your friends without the time commitment of improving mechanical skills or the study and memorization of patterns, then Dark Age Duels is the game for you! Simple medieval-themed classes and attacks provide a simple yet entertaining head-to-head duel where outsmarting your opponent is the key to victory!
 
 > [!NOTE]
 > This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
