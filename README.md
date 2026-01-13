@@ -1,8 +1,8 @@
-# Your startup name here
+# Dark Age Duels
 
 [My Notes](notes.md)
 
-A brief description of the application here. 
+A full-stack web application in which two players duel in turn-based combat as their selected classes.
 
 > [!NOTE]
 > This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
@@ -14,7 +14,7 @@ A brief description of the application here.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
+- [x] Proper use of Markdown
 - [x] A concise and compelling elevator pitch
 - [ ] Description of key features
 - [ ] Description of how you will use each technology
@@ -28,13 +28,22 @@ Tic tac toe can get a little boring, but playing more complex games like league 
 
 ![Design image](placeholder.png)
 
-Here is a sequence diagram that represents how a match between two people might play out.
+Here is a sequence diagram that represents how the two players and the observer send and receive information from the backend during a turn.
 
 ```mermaid
 sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
+    actor Player1
+    actor Player2
+    actor Observer
+    Player1->>Server: Action
+    Server->>Player2: PLayer1 has chosen their action!
+    Server->>Observer: PLayer1 has chosen their action!
+    Player2->>Server: Action
+    Server->>Player1: PLayer2 has chosen their action!
+    Server->>Observer: PLayer2 has chosen their action!
+    Server->>Player1: [broadcast outcome of the turn]
+    Server->>Player2: [broadcast outcome of the turn]
+    Server->>Observer: [broadcast outcome of the turn]
 ```
 
 ### 🔑 Key features
@@ -45,7 +54,7 @@ sequenceDiagram
 - Display of your character and the opponents character, as well as your available moves that turn
 - Health/mana totals displayed
 - Win/Loss ratio persistently stored
-- Ability to join a match as an observer
+- Ability to watch a match as an observer
 - Receive an update when your opponent has selected their action for that turn
 - Receive an update when the turn is evaluated which displays the change in life/mana totals for you and your opponent and the actions used by both.
 - Ability to forfeit a match
