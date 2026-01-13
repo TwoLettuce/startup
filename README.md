@@ -25,11 +25,10 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 Tic tac toe can get a little boring, but playing more complex games like league of legends or games that require intense study like chess can seem pretty overwhelming. If you want a way to prove your dominance over your friends without the time commitment of improving mechanical skills or the study and memorization of patterns, then Dark Age Duels is the game for you! Simple medieval-themed classes and attacks provide a simple yet entertaining head-to-head duel where outsmarting your opponent is the key to victory!
 
 ### 📝 Design
-![Design image start page]
-![Design image login page]
-![Design image match selection]
-![Design image in-game]
-![Design image](placeholder.png)
+![Design image start page](homepage.png)
+![Design image login page](login.png)
+![Design image match selection](match-select.png)
+![Design image in-game](in-game.png)
 
 Here is a sequence diagram that represents how the two players and the observer send and receive information from the backend during a turn.
 
