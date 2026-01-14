@@ -16,9 +16,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] Proper use of Markdown
 - [x] A concise and compelling elevator pitch
-- [ ] Description of key features
+- [x] Description of key features
 - [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### 🛗 Elevator pitch
 
@@ -65,12 +65,17 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Uses correct HTML structure. Three HTML pages - one for login/registering, one for match selection, and one for gameplay.
+- **CSS** - Application styling that places all information in an easily accessible, readable location on any device. medieval-styled color theme.
+- **React** - Used to direct routing from login to match selection and from match selection to gameplay. Displays actions during gameplay. Enables match selection.
+- **Service** - Backend service with endpoints for:
+  - login/register
+  - retrieving the list of matches
+  - creating a new match
+  - joining a match
+  - logout 
+- **DB/Login** - database stores users and their win/loss counter, and matches. login data matched with data in database, which securely stores passwords. 
+- **WebSocket** - Broadcasts when a player locks in the action for that turn, and broadcasts the results of the turn when both players have chosen their actions.
 
 ## 🚀 AWS deliverable
 
