@@ -12,8 +12,13 @@
 
 ## AWS
 
-My IP address is: 54.81.96.130
-Launching my AMI I initially put it on a private subnet. Even though it had a public IP address and the security group was right, I wasn't able to connect to it.
+My IP address is: 100.52.161.233
+
+In order to ssh into the server files, use the following command (after having navigated to the directory containing the private/public key pair):
+```git
+ssh -i 'Production Key.pem' ubuntu@100.52.161.233
+```
+Remember to not only deactivate your server but also to disassociate the public IP address so that you don't get charged for it.
 
 ## Caddy
 
