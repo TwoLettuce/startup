@@ -26,9 +26,17 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
+Reminds me a lot of markdown
+Works pretty much like opening and closing parentheses with text in the middle, and the type of html element and the attributes you give it make it do different things. Here's some useful ones:
 
-The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
+anchor: <a href=\[link to webpage or subdirectory\]>\[text describing your hyperlink\]</a>
+
+Header text: <h\[1-9\]>\[text\]</h#> where # matches whatever you put in the first one. 
+
+Lists: <ul/ol>\[list header\] (unordered list/ordered list)
+
+List Element: \<li>\[list element\]</li>
+       
 
 ## CSS
 
