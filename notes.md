@@ -36,7 +36,12 @@ Header text: <h\[1-9\]>\[text\]</h#> where # matches whatever you put in the fir
 Lists: <ul/ol>\[list header\] (unordered list/ordered list)
 
 List Element: \<li>\[list element\]</li>
-       
+
+If I am going to need an input, I should remember the following things:
+
+Give it a label using \<label for="some input type">Label text\</label>
+
+Make sure that any parameters for the input such as required, value, name, id, type, etc. go in the \<input> html element, and NOT in the label.
 
 ## CSS
 
