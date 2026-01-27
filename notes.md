@@ -27,6 +27,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 ## HTML
 
 Reminds me a lot of markdown
+
 Works pretty much like opening and closing parentheses with text in the middle, and the type of html element and the attributes you give it make it do different things. Here's some useful ones:
 
 anchor: <a href=\[link to webpage or subdirectory\]>\[text describing your hyperlink\]</a>
@@ -42,6 +43,10 @@ If I am going to need an input, I should remember the following things:
 Give it a label using \<label for="some input type">Label text\</label>
 
 Make sure that any parameters for the input such as required, value, name, id, type, etc. go in the \<input> html element, and NOT in the label.
+
+Input elements only have one set of \<>, and end with a forward slash. 
+
+canvas and svg are coded in the html while the other media are urls. 
 
 ## CSS
 
