@@ -87,15 +87,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I created three separate HTML pages. One for login, one for the game select menu, and one for gameplay.
+- [x] **Proper HTML element usage** - I made use of various HTML elements throughout my project and ensured that the syntax fit proper HTML convention and format.
+- [x] **Links** - Each html page has a link to each other page, as well as buttons that will link to the other html pages.
+- [x] **Text** - Explanatory and decorative text is used throughout the HTML pages.
+- [x] **3rd party API placeholder** - The index.html page holds a placeholder where videogame deals will be displayed to users, retreived from CheapShark API.
+- [x] **Images** - I used images in the play.html page where the character pictures will eventually go.
+- [x] **Login placeholder** - I created text input boxes to indicate where the username and password should be input. There is a login/register button that takes the user to the main menu page. The password text box obfuscates text entered into it so as to not reveal the password.
+- [x] **DB data placeholder** - the main menu shows a leaderboard and a list of games built from data stored in the database.
+- [x] **WebSocket placeholder** - Gameplay has a readonly textarea html element which contains sample websocket communication messages.
 
 ## 🚀 CSS deliverable
 
