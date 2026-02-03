@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <body>
     <header>
       <link rel="stylesheet" type="text/css" href="index.css" />
-      <h1>Dark Age Duels</h1>
+      <img src=darkageduels.svg alt="Dark Age Duels">
       <nav>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="index.html" class="nav-link px-2 link-secondary">Home</a></li>
-          <li><a href="menu.html" class="nav-link px-2 link-dark">Menu</a></li>
-          <li><a href="play.html" class="nav-link px-2 link-dark">Play</a></li>
+          <li id="home"><a href="index.html" class="nav-link px-2 link-secondary">Home</a></li>
+          <li id="menu"><a href="menu.html" class="nav-link px-2 link-dark">Menu</a></li>
+          <li id="play"><a href="play.html" class="nav-link px-2 link-dark">Play</a></li>
         </ul>
       </nav>
     </header>
     <main>
-      <h2><u>Raise your Sword!</u></h2>
-      <div>
-      Username: <input type="text" placeholder="Username" required/>
-      </div>
-      <div>
-      Password:<input type="password" placeholder="Password" required/>
-      </div>
-      <form method="get" action="menu.html">
-        <button type="create">Login</button>
-        <button type="create">Register</button>
-      </form>
-      <br />
-      <h3>Current deals:</h3>
-      <p>placeholder for current deals on videogames</p>
-      <p>courtesy of CheapShark API</p>
+      <section id="login-UI">
+        <h2><u>Raise your Sword!</u></h2>
+        <div id="username">
+        Username: <input type="text" placeholder="Username" required/>
+        </div>
+        <div id="password">
+        Password: <input type="password" placeholder="Password" required/>
+        </div>
+        <form method="get" action="menu.html">
+          <button type="create">Login</button>
+          <button type="create">Register</button>
+        </form>
+      </section>
+      <section id="deals">
+        <h3>Current deals:</h3>
+        <div id="game-shark">
+          <p>placeholder for current deals on videogames</p>
+          <p>courtesy of CheapShark API</p>
+        </div>
+      </section>
     </main>
     <footer>
-      <hr />
       <a href="https://github.com/TwoLettuce/startup">Author's github</a>
     </footer>
   </body>
