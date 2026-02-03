@@ -53,7 +53,9 @@ canvas and svg are coded in the html while the other media are urls.
 [open-source fonts](https://fonts.google.com/)
 
 In order to prevent mobile scaling problems:
+```html
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+```
 
 Example grid in CSS
 ```html
