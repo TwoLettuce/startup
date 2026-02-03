@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "Modern Antiqua";
+    src: url('https://fonts.googleapis.com/css2?family=Modern+Antiqua&display=swap');
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Modern+Antiqua&display=swap");
+
+body {
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+}
