@@ -52,6 +52,31 @@ canvas and svg are coded in the html while the other media are urls.
 
 [open-source fonts](https://fonts.google.com/)
 
+In order to prevent mobile scaling problems:
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+Example grid in CSS
+```html
+<div class="container">
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+</div>
+```
+```css
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 300px;
+  grid-gap: 1em;
+}
+```
 
 
 ```html
