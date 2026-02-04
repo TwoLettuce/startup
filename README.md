@@ -101,12 +101,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Visually appealing colors and layout. No overflowing elements.** - I did not complete this part of the deliverable.
-- [ ] **Use of a CSS framework** - I did not complete this part of the deliverable.
-- [ ] **All visual elements styled using CSS** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing using flexbox and/or grid display** - I did not complete this part of the deliverable.
-- [ ] **Use of a imported font** - I did not complete this part of the deliverable.
-- [ ] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I did not complete this part of the deliverable.
+- [x] **Visually appealing colors and layout. No overflowing elements.** - I made it look pretty :)
+- [x] **Use of a CSS framework** - I used bootstrap for my header menu
+- [x] **All visual elements styled using CSS** - Was there any other option to style visual elements?
+- [x] **Responsive to window resizing using flexbox and/or grid display** - I used flex for most of it (turns out grid was easier for the buttons so in play.css I used both)
+- [x] **Use of a imported font** - I imported Modern Antiqua for a pretty medieval-style font
+- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I used all sorts of selectors, turns out they make life easy!
 
 ## 🚀 React part 1: Routing deliverable
 
