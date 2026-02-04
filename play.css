@@ -13,7 +13,7 @@ body {
     height: 100vh;
 }
 
-img {
+#logo {
     border-radius: 20px;
     max-width: 8em;
     max-height: 8em;
@@ -23,6 +23,8 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1em;
+    background-color: whitesmoke;
 }
 
 #play {
@@ -37,23 +39,65 @@ li:hover {
 main {
     display: flex;
     flex-direction: column;
+    background-color: bisque;
 }
 
-#character-info {
+#character-info:not(#websocket-textbox) {
     display: flex;
     flex-direction: row;
+    flex: 0 10em;
 }
 
+
 #player1 {
+    margin: 1em;
     display: flex;
     flex-direction: column;
-    flex: 2;
+    flex: 1;
     align-items: center;
 }
 
 #player2 {
+    margin: 1em;
     display: flex;
     flex-direction: column;
-    flex:2;
+    flex: 1;
     align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-auto-rows: 100px;
+    grid-gap: 1em;
+}
+
+button:hover:not(#resign) {
+    transform: translateY(-0.8em) translateX(-0.3em);
+    background-color: azure;
+    box-shadow: 0.3em 0.8em 0em 0em gray;
+}
+
+#resign-button {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+#resign:hover {
+    background-color: red;
+    transform: translateY(-0.2em);
+}
+
+#websocket-textbox {
+    display: flex;
+    justify-content: center;
+    margin: 3em;
+}
+
+footer {
+    background-color: bisque;
+    padding: 1em;
 }

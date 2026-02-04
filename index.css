@@ -63,6 +63,8 @@ footer {
 
 button:hover {
     transform: translateY(-0.1em);
+    background-color: aqua;
+
 }
 
 #deals {
