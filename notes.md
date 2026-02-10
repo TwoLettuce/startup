@@ -134,6 +134,15 @@ if  you need to compile the JSX into JavaScript, use Vite and have Vite host a h
 npx vite
 ```
 
+Essential logical flow of react:
+
+-Creating componentized representations of HTML and JavaScript.
+
+-Storing component state as component variables.
+
+-Reacting to the user by altering the component's state.
+
+
 ## React Part 2: Reactivity
 
 This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
