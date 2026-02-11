@@ -120,7 +120,29 @@ I also used SVG to make the icon and logo for the app. This turned out to be a p
 
 ## React Part 1: Routing
 
+Key concepts: 
+
+[NPM](https://www.npmjs.com/) - node packages
+
+jsx - react combines javascript and html files together 
+
 Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
+
+if  you need to compile the JSX into JavaScript, use Vite and have Vite host a hot reloading HTTP server so that you can see the result in the browser. You do this by running a variant of the NPM command named NPX. NPX will directly execute a Node package without referencing the package.json file. This is really useful for running JavaScript code that is meant to run as a command line program (CLI) such as Vite.
+
+```shell
+npx vite
+```
+
+Essential logical flow of react:
+
+-Creating componentized representations of HTML and JavaScript.
+
+-Storing component state as component variables.
+
+-Reacting to the user by altering the component's state.
+
+Routers serve to combine a multi-page web application into a single page web application that is manipulated according to user input.
 
 ## React Part 2: Reactivity
 
