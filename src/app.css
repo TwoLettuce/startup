@@ -1,0 +1,54 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Modern+Antiqua&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+.body {
+    font-family: Modern Antiqua;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+}
+
+img {
+    border-radius: 20px;
+    max-width: 8em;
+    max-height: 8em;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    background-color: whitesmoke;
+    align-items: center;
+}
+
+main {
+    display: flex;
+    flex: 1 15em;
+    padding: 1em;
+    background-color: bisque;
+}
+
+li:hover {
+    border: solid black;
+    background-color: floralwhite;
+}
+
+footer {
+    padding: 1em;
+    background-color: bisque;
+}
+
+
+@media (orientation: portrait) {
+  main {
+    flex-direction: column;
+  }
+}
+
