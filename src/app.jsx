@@ -27,7 +27,7 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route path='/' element={<Login />} exact />
+                <Route path='/login' element={<Login />} exact />
                 <Route path='/menu' element={<Menu />} exact />
                 <Route path='/play' element={<Play />} exact />
                 <Route path='*' element={<NotFound />} exact />
