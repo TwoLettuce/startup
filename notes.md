@@ -142,6 +142,7 @@ Essential logical flow of react:
 
 -Reacting to the user by altering the component's state.
 
+Routers serve to combine a multi-page web application into a single page web application that is manipulated according to user input.
 
 ## React Part 2: Reactivity
 
