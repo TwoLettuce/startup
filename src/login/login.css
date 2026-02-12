@@ -1,0 +1,69 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Modern+Antiqua&display=swap');
+
+
+.login_main {
+    display: flex;
+    flex-direction: row;
+}
+
+#login-UI {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#password {
+    display: flex;
+    margin: 1em;
+}
+
+footer {
+    padding: 1em;
+    background-color: bisque;
+}
+
+.login_button {
+    margin-left: 0.3em;
+}
+
+.login_button:hover {
+    transform: translateY(-0.1em);
+    background-color: aqua;
+}
+
+#deals {
+    display: flex;
+    flex-direction: column;
+    flex: 1 15em;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-shark {
+    display:flex;
+    flex-direction: column;
+    align-items:start;
+    background-color: snow;
+    color: gray;
+    border-radius: 0.5em;
+}
+
+input {
+    font-family: Modern Antiqua;
+}
+
+input:hover {
+    background-color:aliceblue;
+}
+
+
+section:nth-child(1){
+    flex:3;
+}
+
+seciton:nth-child(2){
+    flex:1;
+}
+

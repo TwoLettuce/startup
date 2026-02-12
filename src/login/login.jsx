@@ -3,7 +3,7 @@ import "./login.css";
 
 export function Login() {
   return (
-    <main>
+    <main className="login_main">
       <section id="login-UI">
         <h2><u>Raise your Sword!</u></h2>
         <div id="username">
@@ -12,7 +12,7 @@ export function Login() {
         <div id="password">
         Password: <input type="password" placeholder="Password" required/>
         </div>
-        <form method="get" action="menu.html">
+        <form method="get" action="menu">
           <button className="login_button" type="create">Login</button>
           <button className="login_button" type="create">Register</button>
         </form>

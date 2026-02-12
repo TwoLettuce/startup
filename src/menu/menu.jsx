@@ -81,12 +81,12 @@ export function Menu() {
         </table>
       </div>
     
-    <form method="get" action="play.html">
+    <form method="get" action="play">
         <button type="join">Join Match</button>
       </form>
     
     <div>
-      <form method="get" action="play.html">
+      <form method="get" action="play">
         <button type="join">Create Match</button>
       </form>
     </div>
