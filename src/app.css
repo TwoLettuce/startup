@@ -1,10 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Modern+Antiqua&display=swap');
 
-* {
-    box-sizing: border-box;
-}
-
 .body {
     font-family: Modern Antiqua;
     display: flex;
@@ -16,10 +12,8 @@
 
 .logo {
     border-radius: 20px;
-    max-width: 10em;
-    max-height:10em;
-    padding: 1em;
-
+    max-width: 9em;
+    max-height:9em;
 }
 
 .menu_main {
