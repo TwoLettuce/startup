@@ -3,10 +3,7 @@ import "./menu.css";
 
 export function Menu() {
   return (
-    <main>
-    <section id="identifier">
-      
-    </section>
+    <main className="menu_main">
     <section id="leaderboard">
       <label for="leaderboard">Leaderboard</label>
       <div>

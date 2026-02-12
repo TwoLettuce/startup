@@ -13,8 +13,8 @@ export function Login() {
         Password: <input type="password" placeholder="Password" required/>
         </div>
         <form method="get" action="menu.html">
-          <button type="create">Login</button>
-          <button type="create">Register</button>
+          <button className="login_button" type="create">Login</button>
+          <button className="login_button" type="create">Register</button>
         </form>
       </section>
       <section id="deals">
