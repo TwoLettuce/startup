@@ -109,15 +109,6 @@ Example grid in CSS
     </header>
 ```
 
-I also used SVG to make the icon and logo for the app. This turned out to be a piece of cake.
-
-```html
-<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="100" fill="#0066aa" rx="10" ry="10" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="72" font-family="Arial" fill="white">C</text>
-</svg>
-```
-
 ## React Part 1: Routing
 
 Key concepts: 
@@ -146,26 +137,9 @@ Routers serve to combine a multi-page web application into a single page web app
 
 ## React Part 2: Reactivity
 
-This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
+export is the equivalent of public
 
-Handling the toggling of the checkboxes was particularly interesting.
+&& operator will evaluate the left operand, then return the right operand on true and return false otherwise. These two expressions are logically equivalent:
+bool1 && expr and bool1 ? expr : null
 
-```jsx
-<div className="input-group sound-button-container">
-  {calmSoundTypes.map((sound, index) => (
-    <div key={index} className="form-check form-switch">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value={sound}
-        id={sound}
-        onChange={() => togglePlay(sound)}
-        checked={selectedSounds.includes(sound)}
-      ></input>
-      <label className="form-check-label" htmlFor={sound}>
-        {sound}
-      </label>
-    </div>
-  ))}
-</div>
-```
+=== is correct syntax for javascript equivalency.
