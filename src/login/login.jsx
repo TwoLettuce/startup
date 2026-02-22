@@ -1,21 +1,29 @@
 import React from 'react';
 import "./login.css";
+import { AuthState } from './authState'
+import { Authenticated } from './Authenticated'
+import { Unauthenticated } from './Unauthenticated'
 
-export function Login() {
+export function Login({username, authState, onAuthChange}) {
+
+
   return (
     <main className="login_main">
       <section id="login-UI">
         <h2><u>Raise your Sword!</u></h2>
-        <div id="username">
-        Username: <input type="text" placeholder="Username" required/>
-        </div>
-        <div id="password">
-        Password: <input type="password" placeholder="Password" required/>
-        </div>
-        <form method="get" action="menu">
-          <button className="login_button" type="create">Login</button>
-          <button className="login_button" type="create">Register</button>
-        </form>
+        {authState === AuthState.Authenticated && 
+          <Authenticated username = {username} onLogout = {() => 
+            onAuthChange(username, AuthState.Unauthenticated)}
+          />
+        }
+        {authState === AuthState.Unauthenticated && 
+          <Unauthenticated  username = {username} onLogin={(loginUserName) => 
+            {
+              onAuthChange(loginUserName, AuthState.Authenticated)
+            }}
+          />
+        }
+        
       </section>
       <section id="deals">
         <h3>Current deals:</h3>

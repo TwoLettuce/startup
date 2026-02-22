@@ -11,7 +11,7 @@ import { AuthState } from './login/authState'
 const NAVBAR_ROUTES = ['/login', '/play', '/menu'];
 
 export default function App() {
-    const [username, setusername] = React.useState(localStorage.getItem('username'));
+    const [username, setUsername] = React.useState(localStorage.getItem('username'));
     const [authState, setAuthState] = React.useState(username ? AuthState.Authenticated : AuthState.Unauthenticated);
 
     return (
@@ -38,15 +38,22 @@ export default function App() {
             </nav>
             {authState == AuthState.Authenticated && (
                 <div>
-                    <h7><b>Logged in as: </b></h7>
-                    <h7><b>{username}</b></h7>
+                    <h3><b>Logged in as: {username}</b></h3>
                 </div>
             )}
             </header>
 
             <Routes>
                 <Route path='/' element={<Login />} exact />
-                <Route path='/login' element={<Login />} exact />
+                <Route path='/login' element={
+                    <Login 
+                        username = {username}
+                        authState = {authState}
+                        onAuthChange={(username, authState) => {
+                            setAuthState(authState)
+                            setUsername(username);
+                        }}
+                    />} exact />
                 <Route path='/menu' element={<Menu />} exact />
                 <Route path='/play' element={<Play />} exact />
                 <Route path='*' element={<NotFound />} exact />
