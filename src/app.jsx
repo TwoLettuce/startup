@@ -6,29 +6,42 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Menu } from './menu/menu';
 import { Play } from './play/play';
+import { AuthState } from './login/authState'
 
 const NAVBAR_ROUTES = ['/login', '/play', '/menu'];
 
 export default function App() {
+    const [username, setusername] = React.useState(localStorage.getItem('username'));
+    const [authState, setAuthState] = React.useState(username ? AuthState.Authenticated : AuthState.Unauthenticated);
 
-const showNavbar = NAVBAR_ROUTES.includes(location.pathname);
-
-  return (
-    <BrowserRouter>
+    return (
+      <BrowserRouter>
         <div className="body bg-dark text-light">
             <header>
             <img className="logo" src="darkageduels.svg" alt="Dark Age Duels"/>
             <nav>
                 <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li className="home"><NavLink to="login" className="nav-link px-2 link-dark">Home</NavLink></li>
-                <li className="menu"><NavLink to="menu" className="nav-link px-2 link-dark">Menu</NavLink></li>
-                <li className="play"><NavLink to="play" className="nav-link px-2 link-dark">Play</NavLink></li>
+                {authState === AuthState.Authenticated && 
+                    (<li className="menu">
+                        <NavLink to="menu" className="nav-link px-2 link-dark">
+                            Menu
+                        </NavLink>
+                    </li>)}
+                {authState === AuthState.Authenticated && (
+                    <li className="play">
+                        <NavLink to="play" className="nav-link px-2 link-dark">
+                            Play
+                        </NavLink>
+                    </li>)}
                 </ul>
             </nav>
-            <div>
-                <h7><b>Logged in as: </b></h7>
-                <h7><b>Unknown</b></h7>
-            </div>
+            {authState == AuthState.Authenticated && (
+                <div>
+                    <h7><b>Logged in as: </b></h7>
+                    <h7><b>{username}</b></h7>
+                </div>
+            )}
             </header>
 
             <Routes>
