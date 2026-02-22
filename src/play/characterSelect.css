@@ -1,0 +1,16 @@
+.selectors {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5em;
+}
+
+.character_select {
+    display: flex;
+    flex-direction: row;
+}
+
+.character_confirmation_button {
+    display: flex;
+    justify-content: center;
+}
