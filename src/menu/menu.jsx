@@ -5,9 +5,9 @@ export function Menu() {
   return (
     <main className="menu_main">
     <section id="leaderboard">
-      <label for="leaderboard">Leaderboard</label>
+      <label>Leaderboard</label>
       <div>
-      <label for="leaderboard search">Search: </label>
+      <label>Search: </label>
       <input type="search" placeholder="username"/>
       </div>
       <div>
@@ -41,9 +41,9 @@ export function Menu() {
       </div>
     </section>
     <section id="matches">
-      <label for="matches">Matches</label>
+      <label>Matches</label>
       <div>
-        <label for="match search">Search: </label>
+        <label>Search: </label>
         <input type="search" pattern="[0-9]*" placeholder="Match ID"/>
       </div>
       <div>
