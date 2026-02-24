@@ -49,6 +49,13 @@ export function Gameplay(props) {
                 console.log("Enemy burned. Burning for " + enemyBurning + " more turns.");
             }
         }
+        if (playerHealth <= 0) {
+            setPlayerHealth(0);
+            props.setGameLost(true);
+        } else if (enemyHealth <= 0){
+            setEnemyHealth(0);
+            props.setGameWon(true);
+        }
     }
 
     return (
