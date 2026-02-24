@@ -1,16 +1,17 @@
 import React from "react";
-import { Buttons } from "./Buttons"
+import { Buttons } from "./Buttons";
+import { WebSocketText } from './WebSocketText';
+import { GameEvent, GameNotifier } from './GameNotifier';
+
 
 export function Gameplay(props) {
-    const [playerReady, setPlayerReady] = React.useState(false);
-    const [enemyReady, setEnemyReady] = React.useState(false);
     const [playerHealth, setPlayerHealth] = React.useState(props.character.startingHealth());
     const [enemyHealth, setEnemyHealth] = React.useState(props.enemyCharacter.startingHealth());
     const [playerMana, setPlayerMana] = React.useState(props.character.startingMana());
     const [enemyMana, setEnemyMana] = React.useState(props.enemyCharacter.startingMana());
     const [allowMoveSelect, setAllowMoveSelect] = React.useState(true);
     const [enemyBurning, setEnemyBurning] = React.useState(0);
-
+    let gameMessages = [];
     
 
     function onPressed(move) {
@@ -73,7 +74,7 @@ export function Gameplay(props) {
                 <div>MP: {playerMana}/{props.character.startingMana()}</div>
             </section>
             <div id="websocket-textbox">
-                <textarea readOnly rows="3" cols={40} placeholder="Waiting for character select...&#13;You have selected your character!&#13;Opponent has selected their character!&#13;Waiting for move...&#13;Opponent has selected their move!"></textarea>
+                <WebSocketText />
             </div>
             <section id="player2">
                 <div>

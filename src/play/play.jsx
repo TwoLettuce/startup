@@ -12,6 +12,7 @@ export function Play(props) {
     const [confirmed, setConfirmed] = React.useState(false);
     const [gameWon, setGameWon] = React.useState(false);
     const [gameLost, setGameLost] = React.useState(false);
+    
 
     function resignConfirmation(){
         return (
