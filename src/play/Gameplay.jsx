@@ -61,10 +61,14 @@ export function Gameplay(props) {
             GameNotifier.broadcastEvent(props.username, GameEvent.Move, move.name);
             setPlayerMana(playerMana-move.mana);
             if (move.type === 'dmg'){
+                let damage = move.power;
+                if (enemyBurning){
+                    damage += 10;
+                }
                 let hit = Math.floor(Math.random() * 100);
                 if (hit < move.accuracy){
                     console.log("move hits!");
-                    setEnemyHealth(enemyHealth-move.power);
+                    setEnemyHealth(enemyHealth-damage);
                 } else {
                     console.log("oof! miss!");
                 }
@@ -86,7 +90,6 @@ export function Gameplay(props) {
                 console.log("Enemy now burning");
             }
             if (enemyBurning) {
-                setEnemyHealth(enemyHealth-10);
                 setEnemyBurning(enemyBurning-1);
                 console.log("Enemy burned. Burning for " + enemyBurning + " more turns.");
             }
