@@ -13,6 +13,11 @@ li:hover {
     background-color: floralwhite;
 }
 
+button:disabled:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+    cursor: not-allowed;
+}
+
 header {
     display: flex;
     flex-direction: column;
@@ -40,6 +45,10 @@ main {
     flex-direction: column;
     flex:1;
     align-items: center;
+}
+
+.create_input {
+    margin-top: 1em;
 }
 
 th {
