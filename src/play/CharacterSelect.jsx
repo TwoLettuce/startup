@@ -14,7 +14,9 @@ export function CharacterSelect(props){
     return (
         <section className='characterSelect'>
             <div className='characters'>
-                <img src={null} />
+                <img src={'knight.webp'} />
+                <img src={'wizard.png'} />
+                <img src={'dragon.jpg'} />
             </div>
             <div className='selectors'>
                 <button className="selector_button" type="create" onClick={()=>characterSelected(Character.Knight)}>
