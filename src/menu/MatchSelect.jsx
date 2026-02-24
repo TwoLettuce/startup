@@ -3,15 +3,23 @@ import React from 'react';
 export function MatchSelect(){
     const [matchID, setMatchID] = React.useState(0);
     const [gameName, setGameName] = React.useState('');
-    
-    function addNewMatch(matchName){
-        
-        let matches = [];
-        const matchesText = localStorage.getItem('matches');
-        if (matchesText) {
-            matches = JSON.parse(matchesText);
+    const [matches, setMatches] = React.useState([]);
+
+    React.useEffect(()=>
+    {
+        const matches = localStorage.getItem('matches');
+
+        if (matches){
+            setMatches(JSON.parse(matches));
         }
-        let nextAvailableID = updateMatchID(matches);
+    }, []
+    );
+    
+
+
+    function addNewMatch(matchName){
+        let nextAvailableID = updateMatchID();
+        let newMatches = matches;
         class match {
             constructor(matchID, matchName, player1=null, player2=null){
                 this.matchID = matchID
@@ -32,16 +40,17 @@ export function MatchSelect(){
 
         const newMatch = new match(nextAvailableID, matchName); 
         
-        matches.push(newMatch)
+        newMatches.push(newMatch)
         localStorage.setItem("matches", JSON.stringify(matches));
-        return matches;
+        setMatches(newMatches);
     }
 
     function clearMatches() {
         localStorage.removeItem("matches");
+        setMatches([]);
     }
 
-    function updateMatchID(matches) {
+    function updateMatchID() {
         let idUnique = false;
         let nextAvailableID = matchID;
         while (!idUnique){
@@ -57,7 +66,7 @@ export function MatchSelect(){
                 idUnique = true;
             }
         }
-        setMatchID(nextAvailableID);
+        setMatchID(nextAvailableID + 1);
         return nextAvailableID;
     }
 
@@ -71,34 +80,22 @@ export function MatchSelect(){
             <div>
                 <table>
                     <thead>
-                        <th>Match ID</th>
-                        <th>Match Name</th>
-                        <th>Player 1</th>
-                        <th>Player 2</th>
+                        <tr>
+                            <th>Match ID</th>
+                            <th>Match Name</th>
+                            <th>Player 1</th>
+                            <th>Player 2</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <td>43</td>
-                        <td>Treehouse</td>
-                        <td>nerdslayer</td>
-                        <td>Empty</td>
-                    </tbody>
-                    <tbody>
-                        <td>46</td>
-                        <td>freewins</td>
-                        <td>tryhard</td>
-                        <td>steve</td>
-                    </tbody>
-                    <tbody>
-                        <td>47</td>
-                        <td>wizonly</td>
-                        <td>nerdslayer</td>
-                        <td>Empty</td>
-                    </tbody>
-                    <tbody>
-                        <td>52</td>
-                        <td>match78</td>
-                        <td>trevor</td>
-                        <td>new guy</td>
+                        {matches.map((match, index) => (
+                            <tr key={index}>
+                                <td>{match.matchID}</td>
+                                <td>{match.matchName}</td>
+                                <td>{match.player1}</td>
+                                <td>{match.player2}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
