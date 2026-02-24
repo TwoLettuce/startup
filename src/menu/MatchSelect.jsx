@@ -4,6 +4,7 @@ export function MatchSelect(){
     const [matchID, setMatchID] = React.useState(0);
     const [gameName, setGameName] = React.useState('');
     const [matches, setMatches] = React.useState([]);
+    const [queriedID, setQueriedID] = React.useState(null);
 
     React.useEffect(()=>
     {
@@ -70,6 +71,10 @@ export function MatchSelect(){
         return nextAvailableID;
     }
 
+    function concatenatedMatches(matchesList){
+        return matchesList.slice(0,5);
+    }
+
     return (
         <section id="matches">
             <h4>Matches</h4>
@@ -77,6 +82,9 @@ export function MatchSelect(){
                 <b>Search: </b>
                 <input id="match_search" type="search" pattern="[0-9]*" placeholder="Match ID"/>
             </div>
+            <form method="get" action="play">
+                <button type="join" >Join Match</button>
+            </form>
             <div>
                 <table>
                     <thead>
@@ -88,7 +96,7 @@ export function MatchSelect(){
                         </tr>
                     </thead>
                     <tbody>
-                        {matches.map((match, index) => (
+                        {concatenatedMatches(matches).map((match, index) => (
                             <tr key={index}>
                                 <td>{match.matchID}</td>
                                 <td>{match.matchName}</td>
@@ -99,10 +107,6 @@ export function MatchSelect(){
                     </tbody>
                 </table>
             </div>
-            
-            <form method="get" action="play">
-                <button type="join" >Join Match</button>
-            </form>
 
             <input id="create_button" className='create_input' type='text' placeholder='Game Name' onChange={(input)=>setGameName(input.target.value)} required/>
             
