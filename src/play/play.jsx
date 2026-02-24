@@ -5,9 +5,9 @@ import { Gameplay } from './Gameplay'
 
 export function Play(props) {
     const [character, setCharacter] = React.useState('none');
-    const [enemyUsername, setEnemyUsername] = React.useState('Dr. Jensen')
+    const [enemyUsername, setEnemyUsername] = React.useState('Dr. Jensen');
     const [enemyCharacter, setEnemyCharacter] = React.useState('none');
-    const [confirmed, setConfirmed] = React.useState(false)
+    const [confirmed, setConfirmed] = React.useState(false);
 
     function resignConfirmation(){
         return (
