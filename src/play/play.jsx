@@ -5,6 +5,7 @@ import { Gameplay } from './Gameplay'
 
 export function Play(props) {
     const [character, setCharacter] = React.useState('none');
+    const [enemyUsername, setEnemyUsername] = React.useState('Dr. Jensen')
     const [enemyCharacter, setEnemyCharacter] = React.useState('none');
     const [confirmed, setConfirmed] = React.useState(false)
 
@@ -23,7 +24,7 @@ export function Play(props) {
                 setConfirmed={setConfirmed} />
             }
             {confirmed && 
-                <Gameplay username={props.username} character={character} enemyCharacter={enemyCharacter} />
+                <Gameplay username={props.username} character={character} enemyCharacter={enemyCharacter} enemyUsername={enemyUsername}/>
             }
             <div id="resign-button">
                 <form onClick={resignConfirmation()} method="delete" action="menu">
