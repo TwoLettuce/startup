@@ -38,7 +38,7 @@ export default function App() {
             </nav>
             {authState == AuthState.Authenticated && (
                 <div>
-                    <h3><b>Logged in as: {username}</b></h3>
+                    <h5><b>Logged in as: {username}</b></h5>
                 </div>
             )}
             </header>
