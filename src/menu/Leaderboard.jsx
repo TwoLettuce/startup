@@ -3,10 +3,10 @@ import React from 'react';
 export function Leaderboard(){
     return (
         <section id="leaderboard">
-            <label>Leaderboard</label>
+            <h4>Leaderboard</h4>
             <div>
-                <label>Search: </label>
-                <input type="search" placeholder="username"/>
+                <b>Search: </b>
+                <input id='leaderboard_search' type="search" placeholder="username"/>
             </div>
             <div>
                 <table>
