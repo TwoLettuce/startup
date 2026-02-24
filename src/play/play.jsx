@@ -3,8 +3,10 @@ import "./play.css"
 import { CharacterSelect } from './CharacterSelect';
 import { Gameplay } from './Gameplay'
 
-export function Play() {
+export function Play(props) {
     const [character, setCharacter] = React.useState('none');
+    const [enemyCharacter, setEnemyCharacter] = React.useState('none');
+    const [confirmed, setConfirmed] = React.useState(false)
 
     function resignConfirmation(){
         return (
@@ -14,11 +16,14 @@ export function Play() {
 
     return (
         <main>
-            {character === 'none' && 
-                <CharacterSelect />
+            {!confirmed && 
+                <CharacterSelect character={character} 
+                setCharacter={setCharacter} 
+                setEnemyCharacter={setEnemyCharacter} 
+                setConfirmed={setConfirmed} />
             }
-            {character !== 'none' && 
-                <Gameplay />
+            {confirmed && 
+                <Gameplay username={props.username} character={character} enemyCharacter={enemyCharacter} />
             }
             <div id="resign-button">
                 <form onClick={resignConfirmation()} method="delete" action="menu">
