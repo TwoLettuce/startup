@@ -6,7 +6,7 @@ export function CharacterSelect(props){
     const [selected, setSelected] = React.useState('false');
     function characterSelected(character){
         props.setCharacter(character);
-        props.setEnemyCharacter(Character.Dragon);
+        props.setEnemyCharacter(Character.Wizard);
         setSelected(true);
     } 
 
