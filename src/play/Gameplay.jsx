@@ -11,13 +11,54 @@ export function Gameplay(props) {
     const [enemyMana, setEnemyMana] = React.useState(props.enemyCharacter.startingMana());
     const [allowMoveSelect, setAllowMoveSelect] = React.useState(true);
     const [enemyBurning, setEnemyBurning] = React.useState(0);
-    let gameMessages = [];
+    const [events, setEvent] = React.useState([]);
+
+    function handleGameEvent(event) {
+        setEvent((prevEvents) => {
+        let newEvents = [event, ...prevEvents];
+        if (newEvents.length > 10) {
+            newEvents = newEvents.slice(1, 10);
+        }
+        return newEvents;
+        });
+    }
+
+    function loadMessages() {
+        const messageArray = [];
+        for (const [i, event] of events.entries()) {
+        let message = 'unknown';
+        if (event.type === GameEvent.End) {
+            message = `Game Over!`;
+        } else if (event.type === GameEvent.Select) {
+            message = `${event.from} has selected their character!`;
+        } else if (event.type === GameEvent.System) {
+            message = event.value.msg;
+        } else if (event.type === GameEvent.Move){
+            message = `${event.from} has selected their move!`
+        }
+
+        messageArray.push(
+            <div key={i} className='event'>
+                {message}
+            </div>
+        );
+        }
+        return messageArray;
+    }
     
+    React.useEffect(()=> {if (playerHealth <= 0) {
+            setPlayerHealth(0);
+            props.setGameLost(true);
+        } else if (enemyHealth <= 0){
+            setEnemyHealth(0);
+            props.setGameWon(true);
+        }}, [playerHealth, enemyHealth])
+
 
     function onPressed(move) {
         if (allowMoveSelect && move.mana <= playerMana){
             //setAllowMoveSelect(false);
-            //GameNotifier.BroadcastEvent(username)
+            GameNotifier.broadcastEvent(props.username, GameEvent.Move, move.name);
             setPlayerMana(playerMana-move.mana);
             if (move.type === 'dmg'){
                 let hit = Math.floor(Math.random() * 100);
@@ -50,13 +91,6 @@ export function Gameplay(props) {
                 console.log("Enemy burned. Burning for " + enemyBurning + " more turns.");
             }
         }
-        if (playerHealth <= 0) {
-            setPlayerHealth(0);
-            props.setGameLost(true);
-        } else if (enemyHealth <= 0){
-            setEnemyHealth(0);
-            props.setGameWon(true);
-        }
     }
 
     return (
@@ -74,7 +108,7 @@ export function Gameplay(props) {
                 <div>MP: {playerMana}/{props.character.startingMana()}</div>
             </section>
             <div id="websocket-textbox">
-                <WebSocketText />
+                <WebSocketText messages={loadMessages()} />
             </div>
             <section id="player2">
                 <div>
