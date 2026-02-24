@@ -9,10 +9,11 @@ export function Gameplay(props) {
     const [playerMana, setPlayerMana] = React.useState(props.character.startingMana());
     const [enemyMana, setEnemyMana] = React.useState(props.enemyCharacter.startingMana());
     const [allowMoveSelect, setAllowMoveSelect] = React.useState(true);
+    const [enemyBurning, setEnemyBurning] = React.useState(0);
 
     
 
-    async function onPressed(move) {
+    function onPressed(move) {
         if (allowMoveSelect && move.mana <= playerMana){
             //setAllowMoveSelect(false);
             //GameNotifier.BroadcastEvent(username)
@@ -29,6 +30,23 @@ export function Gameplay(props) {
                 setPlayerHealth(playerHealth+move.power);
             } else if (move.type === 'block') {
                 ;
+            } else if (move.type === 'hybrid') {
+                let hit = Math.floor(Math.random() * 100);
+                if (hit < move.accuracy){
+                    console.log("move hits!");
+                    setEnemyHealth(enemyHealth-move.power);
+                } else {
+                    console.log("oof! miss!");
+                }
+                setPlayerHealth(playerHealth+move.power*2);
+            } else if (move.type === 'burn'){
+                setEnemyBurning(3);
+                console.log("Enemy now burning");
+            }
+            if (enemyBurning) {
+                setEnemyHealth(enemyHealth-10);
+                setEnemyBurning(enemyBurning-1);
+                console.log("Enemy burned. Burning for " + enemyBurning + " more turns.");
             }
         }
     }
