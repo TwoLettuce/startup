@@ -108,39 +108,40 @@ export function Gameplay(props) {
         } else if (playerMana < move.mana) {
             GameNotifier.broadcastEvent(props.username, GameEvent.Mana);
         }
+
+        doEnemyTurn();
     }
 
     return (
-
-    <samp>
-        <section id="character-info">
-            <section id="player1">
-                <div>
-                <h5><b>{props.username}: {props.character.toString()}</b></h5>
+        <samp>
+            <section id="character-info">
+                <section id="player1">
+                    <div>
+                    <h5><b>{props.username}: {props.character.toString()}</b></h5>
+                    </div>
+                    <div>
+                    <img className="player_graphic" alt="Knight with sword" width={250} height={250} src={props.character.getImage()}/>
+                    </div>
+                    <div>HP: {playerHealth}/{props.character.startingHealth()}</div>
+                    <div>MP: {playerMana}/{props.character.startingMana()}</div>
+                </section>
+                <div id="websocket-textbox">
+                    <WebSocketText messages={loadMessages()} />
                 </div>
-                <div>
-                <img className="player_graphic" alt="Knight with sword" width={250} height={250} src={props.character.getImage()}/>
-                </div>
-                <div>HP: {playerHealth}/{props.character.startingHealth()}</div>
-                <div>MP: {playerMana}/{props.character.startingMana()}</div>
+                <section id="player2">
+                    <div>
+                    <h5><b>{props.enemyUsername}: {props.enemyCharacter.toString()}</b></h5>
+                    </div>
+                    <div>
+                        <img className="player_graphic" alt="Vector art of a dragon" width={250} height={250} src={props.enemyCharacter.getImage()}></img>
+                    </div>
+                    <div>HP: {enemyHealth}/{props.enemyCharacter.startingHealth()}</div>
+                    <div>MP: {enemyMana}/{props.enemyCharacter.startingMana()}</div>
+                </section>
             </section>
-            <div id="websocket-textbox">
-                <WebSocketText messages={loadMessages()} />
-            </div>
-            <section id="player2">
-                <div>
-                <h5><b>{props.enemyUsername}: {props.enemyCharacter.toString()}</b></h5>
-                </div>
-                <div>
-                    <img className="player_graphic" alt="Vector art of a dragon" width={250} height={250} src={props.enemyCharacter.getImage()}></img>
-                </div>
-                <div>HP: {enemyHealth}/{props.enemyCharacter.startingHealth()}</div>
-                <div>MP: {enemyMana}/{props.enemyCharacter.startingMana()}</div>
+            <section id="gameplay-buttons">
+                <Buttons character={props.character} onPressed={onPressed}/>
             </section>
-        </section>
-        <section id="gameplay-buttons">
-            <Buttons character={props.character} onPressed={onPressed}/>
-        </section>
-    </samp>
+        </samp>
     );
 }

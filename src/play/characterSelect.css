@@ -5,6 +5,13 @@
     gap: 5em;
 }
 
+.characters {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.4em;
+}
+
 .character_select {
     display: flex;
     flex-direction: row;
