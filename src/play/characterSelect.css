@@ -10,7 +10,10 @@
     flex-direction: row;
 }
 
-.character_confirmation_button {
+.confirmation {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5em;
     justify-content: center;
 }

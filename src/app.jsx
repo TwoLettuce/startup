@@ -55,7 +55,7 @@ export default function App() {
                         }}
                     />} exact />
                 <Route path='/menu' element={<Menu />} exact />
-                <Route path='/play' element={<Play />} exact />
+                <Route path='/play' element={<Play username={username} />} exact />
                 <Route path='*' element={<NotFound />} exact />
             </Routes>
 
