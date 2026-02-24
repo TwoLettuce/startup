@@ -1,0 +1,13 @@
+import React from "react";
+import { ReturnToMenu } from './ReturnToMenu'
+export function Victory(){
+
+    return (
+        <div>
+            <h2 className='victory_text'>
+                You Win!
+            </h2>
+            <ReturnToMenu />
+        </div>
+    )
+}
