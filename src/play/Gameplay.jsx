@@ -4,29 +4,32 @@ import { Buttons } from "./Buttons"
 export function Gameplay(props) {
     const [playerReady, setPlayerReady] = React.useState(false);
     const [enemyReady, setEnemyReady] = React.useState(false);
-    const [playerHealth, setPlayeHealth] = React.useState(props.character.startingHealth());
+    const [playerHealth, setPlayerHealth] = React.useState(props.character.startingHealth());
     const [enemyHealth, setEnemyHealth] = React.useState(props.enemyCharacter.startingHealth());
     const [playerMana, setPlayerMana] = React.useState(props.character.startingMana());
     const [enemyMana, setEnemyMana] = React.useState(props.enemyCharacter.startingMana());
-    const [allowMoveSelect, setAllowMoveSelect] = React.useState(false);
+    const [allowMoveSelect, setAllowMoveSelect] = React.useState(true);
 
-    class move {
-        constructor(name, type, power=0, accuracy=0, mana=0){
-            this.name=name;
-            this.type=type;
-            this.power=power;
-            this.accuracy=accuracy;
-            this.mana=mana;
-        }
-        log(){
-            console.log(props.username + "has made the move " + this.type);
-        }
-    }
+    
 
-    function onPressed(move) {
-        if (allowMoveSelect && mana <= playerMana){
-            setAllowMoveSelect(false);
-            GameNotifier.BroadcastEvent(username)
+    async function onPressed(move) {
+        if (allowMoveSelect && move.mana <= playerMana){
+            //setAllowMoveSelect(false);
+            //GameNotifier.BroadcastEvent(username)
+            setPlayerMana(playerMana-move.mana);
+            if (move.type === 'dmg'){
+                let hit = Math.floor(Math.random() * 100);
+                if (hit < move.accuracy){
+                    console.log("move hits!");
+                    setEnemyHealth(enemyHealth-move.power);
+                } else {
+                    console.log("oof! miss!");
+                }
+            } else if (move.type === 'heal'){
+                setPlayerHealth(playerHealth+move.power);
+            } else if (move.type === 'block') {
+                ;
+            }
         }
     }
 
@@ -59,7 +62,7 @@ export function Gameplay(props) {
             </section>
         </section>
         <section id="gameplay-buttons">
-            <Buttons character={props.character}/>
+            <Buttons character={props.character} onPressed={onPressed}/>
         </section>
     </samp>
     );
