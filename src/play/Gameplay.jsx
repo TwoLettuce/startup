@@ -17,7 +17,7 @@ export function Gameplay(props) {
         setEvent((prevEvents) => {
         let newEvents = [event, ...prevEvents];
         if (newEvents.length > 10) {
-            newEvents = newEvents.slice(1, 10);
+            newEvents = newEvents.slice(0, 10);
         }
         return newEvents;
         });
@@ -26,34 +26,46 @@ export function Gameplay(props) {
     function loadMessages() {
         const messageArray = [];
         for (const [i, event] of events.entries()) {
-        let message = 'unknown';
-        if (event.type === GameEvent.End) {
-            message = `Game Over!`;
-        } else if (event.type === GameEvent.Select) {
-            message = `${event.from} has selected their character!`;
-        } else if (event.type === GameEvent.System) {
-            message = event.value.msg;
-        } else if (event.type === GameEvent.Move){
-            message = `${event.from} has selected their move!`
-        }
+            let message = 'unknown';
+            if (event.type === GameEvent.End) {
+                message = `Game Over!`;
+            } else if (event.type === GameEvent.Select) {
+                message = `${event.from} has selected their character!`;
+            } else if (event.type === GameEvent.System) {
+                message = event.value.msg;
+            } else if (event.type === GameEvent.Move){
+                message = `${event.from} has selected their move!`;
+            } else if (event.type == GameEvent.Mana){
+                message = "Not enough Mana!";
+            }
 
-        messageArray.push(
-            <div key={i} className='event'>
-                {message}
-            </div>
-        );
+            messageArray.push(
+                message
+            );
         }
         return messageArray;
     }
     
-    React.useEffect(()=> {if (playerHealth <= 0) {
+    React.useEffect(()=> {
+        if (playerHealth <= 0) {
             setPlayerHealth(0);
             props.setGameLost(true);
         } else if (enemyHealth <= 0){
             setEnemyHealth(0);
             props.setGameWon(true);
-        }}, [playerHealth, enemyHealth])
+        }},
+        [playerHealth, enemyHealth]
+    );
+    
+    React.useEffect(()=> {
+            GameNotifier.addHandler(handleGameEvent);
+            GameNotifier.broadcastEvent(props.username, GameEvent.Select, {});
+            GameNotifier.broadcastEvent(props.enemyUsername, GameEvent.Select, {});
+            return ()=>{GameNotifier.removeHandler(handleGameEvent)};
 
+        },
+        []
+    );
 
     function onPressed(move) {
         if (allowMoveSelect && move.mana <= playerMana){
@@ -93,6 +105,8 @@ export function Gameplay(props) {
                 setEnemyBurning(enemyBurning-1);
                 console.log("Enemy burned. Burning for " + enemyBurning + " more turns.");
             }
+        } else if (playerMana < move.mana) {
+            GameNotifier.broadcastEvent(props.username, GameEvent.Mana);
         }
     }
 

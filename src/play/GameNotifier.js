@@ -3,6 +3,7 @@ const GameEvent = {
   End: 'gameOver',
   Move: 'move',
   Select: 'characterSelect',
+  Mana: 'Not enough Mana'
 };
 
 class EventMessage {
@@ -20,6 +21,10 @@ class GameEventNotifier {
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
     this.receiveEvent(event);
+  }
+
+  sendError(mana, cost){
+    this.receiveEvent();
   }
 
   addHandler(handler) {
