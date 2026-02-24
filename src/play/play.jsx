@@ -31,6 +31,6 @@ export function Play(props) {
                     <button id="resign">Resign game</button>
                 </form>
             </div>
-    </main>
+        </main>
     );
 }
