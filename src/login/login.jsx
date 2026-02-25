@@ -13,13 +13,13 @@ export function Login({username, authState, onAuthChange}) {
         <h2><u>Raise your Sword!</u></h2>
         {authState === AuthState.Authenticated && 
           <Authenticated username = {username} onLogout = {() => 
-            onAuthChange(username, AuthState.Unauthenticated)}
+            onAuthChange('', '', AuthState.Unauthenticated)}
           />
         }
         {authState === AuthState.Unauthenticated && 
-          <Unauthenticated  username = {username} onLogin={(loginUserName) => 
+          <Unauthenticated username = {username} onLogin={(loginUsername, loginPassword) => 
             {
-              onAuthChange(loginUserName, AuthState.Authenticated)
+              onAuthChange(loginUsername, loginPassword, AuthState.Authenticated)
             }}
           />
         }

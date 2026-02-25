@@ -18,6 +18,14 @@ button:disabled:hover {
     cursor: not-allowed;
 }
 
+#leaderboard_search {
+    transform: translateX(-2.3em);
+}
+
+.leaderboardSearch {
+    transform: translateX(5em);
+}
+
 header {
     display: flex;
     flex-direction: column;

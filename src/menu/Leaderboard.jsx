@@ -1,41 +1,102 @@
 import React from 'react';
 
-export function Leaderboard(){
+export function Leaderboard( { username, password } ){
+
+    const [users, setUsers] = React.useState([]);
+    const [queriedUser, setQueriedUser] = React.useState('');
+
+    class User {
+        constructor(username, password, wins, losses){
+            this.username = username;
+            this.password = password;
+            this.wins = wins;
+            this.losses = losses;
+        }
+    }
+
+    function sortUsers(){
+        let sortedUsers = [...users];
+        return sortedUsers.sort((a,b) => b.wins - a.wins);
+    }
+
+    function deleteUsers(){
+        setUsers([]);
+    }
+
+    React.useEffect(()=>
+        {
+            let users = localStorage.getItem('users');
+            if (users) {
+                users = JSON.parse(users);
+            } else {
+                users = [];
+            }
+            let usernameFound = false;
+            for (const user of users){
+                if (user.username === username) {
+                    usernameFound = true;
+                }
+            }
+            if (!usernameFound){
+                users.push(new User(username, password, 0, 0));
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            setUsers(users);
+
+        }, []);
+
+    React.useEffect(()=> {
+        localStorage.setItem('users', JSON.stringify(users));
+    }, [users]);
+
+    function concatenateUsers(users){
+        return users.slice(0,10);
+    }
+
+    function addUser(){
+        const wins = Math.floor(Math.random()*100);
+        const losses = 100-wins;
+        let username = 'user';
+        while (username.length < 9) {
+            username += Math.random().toString(16).substring(2);
+        }
+        username = username.slice(0, 9);
+        const password = "badPassword";
+
+        const thisUser = new User(username, password, wins, losses);
+        let tempUsers = [...users];
+        tempUsers.push(thisUser);
+        setUsers(tempUsers);
+    }
+
     return (
         <section id="leaderboard">
             <h4>Leaderboard</h4>
-            <div>
+            <div id='leaderboard_search'>
                 <b>Search: </b>
-                <input id='leaderboard_search' type="search" placeholder="username"/>
+                <input type="search" placeholder="username"/>
             </div>
             <div>
                 <table>
-                <thead>
-                    <th>Ranking</th>
-                    <th>Name</th>
-                    <th>W/L</th>
-                </thead>
-                <thead>
-                    <td>#1</td>
-                    <td>nerdslayer</td>
-                    <td>68W/1L</td>
-                </thead>
-                <thead>
-                    <td>#2</td>
-                    <td>tryhard</td>
-                    <td>60W/42L</td>
-                </thead>
-                <thead>
-                    <td>#3</td>
-                    <td>theLegend27</td>
-                    <td>27W/27L</td>
-                </thead>
-                <thead>
-                    <td>#4</td>
-                    <td>trevor</td>
-                    <td>2W/75L</td>
-                </thead>
+                    <thead>
+                        <tr>
+                            <th>Ranking</th>
+                            <th>Name</th>
+                            <th>W/L</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        {concatenateUsers(sortUsers()).map((user, index) => (
+                            <tr key={index}>
+                                <td>{index+1}</td>
+                                <td>{user.username}</td>
+                                <td>{user.wins}/{user.losses}</td>
+                            </tr>
+                            ))}
+                    </thead>            
                 </table>
+                <button type="join" onClick={()=>addUser()}>Create User</button>
+                <button type="delete" onClick={()=>deleteUsers()}>Delete Users</button>
             </div>
             </section>
     )

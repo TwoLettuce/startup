@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function MatchSelect(){
+export function MatchSelect(props){
     const [matchID, setMatchID] = React.useState(0);
     const [gameName, setGameName] = React.useState('');
     const [matches, setMatches] = React.useState([]);
@@ -9,7 +9,7 @@ export function MatchSelect(){
     React.useEffect(()=>
     {
         const matches = localStorage.getItem('matches');
-
+        
         if (matches){
             setMatches(JSON.parse(matches));
         }

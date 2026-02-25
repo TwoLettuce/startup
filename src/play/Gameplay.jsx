@@ -13,6 +13,9 @@ export function Gameplay(props) {
     const [enemyBurning, setEnemyBurning] = React.useState(0);
     const [events, setEvent] = React.useState([]);
 
+    const playerHPRef = React.useRef(playerHealth);
+    const enemyHPRef = React.useRef(enemyHealth);
+
     function handleGameEvent(event) {
         setEvent((prevEvents) => {
         let newEvents = [event, ...prevEvents];
@@ -26,18 +29,36 @@ export function Gameplay(props) {
     function loadMessages() {
         const messageArray = [];
         for (const [i, event] of events.entries()) {
-            let message = 'unknown';
-            if (event.type === GameEvent.End) {
-                message = `Game Over!`;
-            } else if (event.type === GameEvent.Select) {
-                message = `${event.from} has selected their character!`;
-            } else if (event.type === GameEvent.System) {
-                message = event.value.msg;
-            } else if (event.type === GameEvent.Move){
-                message = `${event.from} has selected their move!`;
-            } else if (event.type == GameEvent.Mana){
-                message = "Not enough Mana!";
-            }
+            let message;
+            switch (event.type){
+                case GameEvent.End:
+                    message = `Game Over!`;
+                    break;
+                case GameEvent.Select:
+                    message = `${event.from} has selected their character!`;
+                    break;
+                case GameEvent.System:
+                    message = event.value.msg;
+                    break;
+                case GameEvent.Move:
+                    message = `${event.from} has selected their move!`;
+                    break;
+                case GameEvent.Mana:
+                    message = "Not enough Mana, peasant!";
+                    break;
+                case GameEvent.Damaged:
+                    message = `${event.from} took ${event.value.dmg} damage`
+                    break;
+                case GameEvent.Healed:
+                    message = `${event.from} healed ${event.value.heal} HP`
+                    break;
+                case GameEvent.Blocking:
+                    message = `${event.from} is blocking.`
+                    break;
+                default:
+                    message = 'unknown';
+                    break;
+            } 
 
             messageArray.push(
                 message
@@ -53,8 +74,26 @@ export function Gameplay(props) {
         } else if (enemyHealth <= 0){
             setEnemyHealth(0);
             props.setGameWon(true);
-        }},
-        [playerHealth, enemyHealth]
+        }
+
+        const playerHealthDif = playerHPRef.current-playerHealth;
+        const enemyHealthDif = enemyHPRef.current-enemyHealth;
+
+        if (playerHealthDif > 0){
+            GameNotifier.broadcastEvent(props.username, GameEvent.Damaged, {dmg: playerHealthDif})
+        } else if (playerHealthDif < 0) {
+            GameNotifier.broadcastEvent(props.username, GameEvent.Healed, {heal: -1*playerHealthDif})
+        }
+
+        if (enemyHealthDif > 0){
+            GameNotifier.broadcastEvent(props.enemyUsername, GameEvent.Damaged, {dmg: enemyHealthDif})
+        } else if (enemyHealthDif < 0) {
+            GameNotifier.broadcastEvent(props.enemyUsername, GameEvent.Healed, {heal: -1*enemyHealthDif})
+        }
+        playerHPRef.current = playerHealth;
+        enemyHPRef.current = enemyHealth;
+    },
+    [playerHealth, enemyHealth]
     );
     
     React.useEffect(()=> {
@@ -62,7 +101,6 @@ export function Gameplay(props) {
             GameNotifier.broadcastEvent(props.username, GameEvent.Select, {});
             GameNotifier.broadcastEvent(props.enemyUsername, GameEvent.Select, {});
             return ()=>{GameNotifier.removeHandler(handleGameEvent)};
-
         },
         []
     );
@@ -87,7 +125,7 @@ export function Gameplay(props) {
             } else if (move.type === 'heal'){
                 setPlayerHealth(playerHealth+move.power);
             } else if (move.type === 'block') {
-                ;
+                GameNotifier.broadcastEvent(props.username, GameEvent.Blocking, {});
             } else if (move.type === 'hybrid') {
                 let hit = Math.floor(Math.random() * 100);
                 if (hit < move.accuracy){
