@@ -21,6 +21,14 @@ class GameEventNotifier {
   events = [];
   handlers = [];
 
+  constructor() {
+    // Simulate chat messages that will eventually come over WebSocket
+    setInterval(() => {
+      const userName = 'Dr. Jensen';
+      this.broadcastEvent(userName, GameEvent.Move, {});
+    }, 5000);
+  }
+
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
     this.receiveEvent(event);

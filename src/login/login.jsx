@@ -6,7 +6,6 @@ import { Unauthenticated } from './Unauthenticated'
 
 export function Login({username, authState, onAuthChange}) {
   
-
   return (
     <main className="login_main">
       <section id="login-UI">
@@ -25,13 +24,20 @@ export function Login({username, authState, onAuthChange}) {
         }
         
       </section>
-      <section id="deals">
-        <h3>Current deals:</h3>
-        <div id="game-shark">
-          <p>placeholder for current deals on videogames</p>
-          <p>courtesy of CheapShark API</p>
-        </div>
-      </section>
+      <GameDeals />
     </main>
+  );
+}
+
+//to be replaced with external API call
+function GameDeals(){
+  return (
+    <section id="deals">
+      <h3>Current deals:</h3>
+      <div id="game-shark">
+        <p>placeholder for current deals on videogames</p>
+        <p>courtesy of CheapShark API</p>
+      </div>
+    </section>
   );
 }
