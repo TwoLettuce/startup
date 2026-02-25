@@ -3,7 +3,10 @@ const GameEvent = {
   End: 'gameOver',
   Move: 'move',
   Select: 'characterSelect',
-  Mana: 'Not enough Mana'
+  Mana: 'Not enough Mana',
+  Damaged: 'took damage',
+  Healed: 'healed',
+  Blocking: 'blocking'
 };
 
 class EventMessage {

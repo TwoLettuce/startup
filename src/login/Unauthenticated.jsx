@@ -6,12 +6,12 @@ export function Unauthenticated(props){
 
     async function loginUser() {
         localStorage.setItem('username', username);
-        props.onLogin(username);
+        props.onLogin(username, password);
     }
 
     async function registerUser() {
         localStorage.setItem('username', username);
-        props.onLogin(username);
+        props.onLogin(username, password);
     }
 
     return (
