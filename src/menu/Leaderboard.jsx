@@ -14,7 +14,7 @@ export function Leaderboard( { username, password } ){
         }
     }
 
-    function sortUsers(){
+    function sortUsers(users){
         let sortedUsers = [...users];
         return sortedUsers.sort((a,b) => b.wins - a.wins);
     }
@@ -53,6 +53,16 @@ export function Leaderboard( { username, password } ){
         return users.slice(0,10);
     }
 
+    function getQueriedUsers(){
+        let queriedUsers = [];
+        for (const user of users) {
+            if (user.username.includes(queriedUser)){
+                queriedUsers.push(user);
+            }
+        }
+        return queriedUsers
+    }
+
     function addUser(){
         const wins = Math.floor(Math.random()*100);
         const losses = 100-wins;
@@ -74,7 +84,7 @@ export function Leaderboard( { username, password } ){
             <h4>Leaderboard</h4>
             <div id='leaderboard_search'>
                 <b>Search: </b>
-                <input type="search" placeholder="username"/>
+                <input type="search" placeholder="username" onChange={(input)=>setQueriedUser(input.target.value)}/>
             </div>
             <div>
                 <table>
@@ -86,7 +96,7 @@ export function Leaderboard( { username, password } ){
                         </tr>
                     </thead>
                     <thead>
-                        {concatenateUsers(sortUsers()).map((user, index) => (
+                        {concatenateUsers(sortUsers(getQueriedUsers())).map((user, index) => (
                             <tr key={index}>
                                 <td>{index+1}</td>
                                 <td>{user.username}</td>
