@@ -15,7 +15,7 @@ export function Unauthenticated(props){
     }
 
     return (
-        <>
+        <section>
             <div id="username">
                 Username: 
                 <input type="text" placeholder="Username" value={username} onChange={(input)=> setUsername(input.target.value)} required/>
@@ -32,6 +32,6 @@ export function Unauthenticated(props){
                     Register
                 </button>
             </form>
-        </>
+        </section>
     )
 }
