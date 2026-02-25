@@ -120,8 +120,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - Gameplay, websocket, database storage, and external API calls were mocked out in some functionality, and in others are completely functional. Try out searching the leaderboard, creating and searching through games, and choosing various characters.
+- [x] **Hooks** - React.useEffect and React.useState were essential to the functionality of my program, especially with using the 'lifting state up' model.
 
 ## 🚀 Service deliverable
 
