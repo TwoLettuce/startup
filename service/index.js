@@ -3,10 +3,19 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+import {User} from '../src/menu/Leaderboard'
 
 const authCookieName = 'authentication';
 
+class AuthData {
+    constructor (username, token){
+        this.username = username;
+        this.token = token;
+    }
+}
+
 let users = [];
+let authenticated = [];
 let games = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -31,9 +40,34 @@ apiRouter.post('/user', (req, res) => {
     if (users.find((u) => u['username'] === req.username)){
         res.status(409).send({msg: 'User with that Username already exists!'});
     } else {
+        createAuthCookie(res);
+        const newUser = User(req.username, req.password, 0, 0);
         res.send({msg: 'You registered!'})
     }
 });
+
+
+//generate an authentication token and send it back to client as a cookie
+function createAuthCookie(res){
+    const newAuthData = AuthData(res.username, uuid.v4);
+    res.cookie(authCookieName, newAuthData.token, {
+        maxAge: 100 * 60 * 60 * 24 * 365,
+        secure : true,
+        httpOnly: true,
+        sameSite: 'strict',
+    });
+    authenticated.push(newAuthData);
+}
+
+//Middleware to verify authentication
+function verifyAuth(req, res, next) {
+    const user = users.find((u) => u[token].token == req.cookies[authCookieName]);
+    if (user){
+        next();
+    } else {
+        res.status(401).send({msg: 'Unauthorized'})
+    }
+}
 
 
 // log when listening

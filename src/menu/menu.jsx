@@ -7,7 +7,7 @@ export function Menu( { username, password }) {
   return (
     <main className="menu_main">
       <Leaderboard username={username} />
-      <MatchSelect username={username} password={password}/>
+      <MatchSelect username={username} />
     </main>
   );
 }
