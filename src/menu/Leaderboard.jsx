@@ -1,18 +1,20 @@
 import React from 'react';
 
+export class User {
+    constructor(username, password, wins, losses){
+        this.username = username;
+        this.password = password;
+        this.wins = wins;
+        this.losses = losses;
+    }
+}
+
 export function Leaderboard( { username, password } ){
 
     const [users, setUsers] = React.useState([]);
     const [queriedUser, setQueriedUser] = React.useState('');
 
-    class User {
-        constructor(username, password, wins, losses){
-            this.username = username;
-            this.password = password;
-            this.wins = wins;
-            this.losses = losses;
-        }
-    }
+    
 
     function sortUsers(users){
         let sortedUsers = [...users];
