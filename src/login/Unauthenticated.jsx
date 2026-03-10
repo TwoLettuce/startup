@@ -3,33 +3,35 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 export function Unauthenticated(props){
-    const [username, setUsername] = React.useState(props.username);
+    const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [httpError, setHttpError] = React.useState(null);
 
-    async function loginUser() {
+    function loginUser() {
         loginOrRegister('/api/session');
         localStorage.setItem('username', username);
         props.onLogin(username);
     }
 
-    async function registerUser() {
+    function registerUser() {
+        debugger;
+        console.log("here");
         loginOrRegister('/api/user');
         localStorage.setItem('username', username);
         props.onLogin(username);
     }
 
-    function loginOrRegister(path){
-        const res = fetch(path, {
+    async function loginOrRegister(path){
+        const response = await fetch(path, {
             method: 'post',
             body: JSON.stringify({username: username, password: password}),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             },
         });
-        if (res?.status !== 200){
-            const body = response.json();
-            setDisplayError(`⚠ Error: ${body.msg}`);
+        if (response?.status !== 200){
+            const body = await response.json();
+            setHttpError(`⚠ Error: ${body.msg}`);
         } else {
             localStorage.setItem('username', username);
             props.onLogin(username);
@@ -48,10 +50,10 @@ export function Unauthenticated(props){
                 <input type="password" placeholder="Password" value={password} onChange={(input)=> setPassword(input.target.value)}required/>
             </div>
             <form method="get" action="menu">
-                <button className="login_button" type="create" onClick={()=>loginUser()} disabled={(!username || !password)}>
+                {/* <button className="login_button" type="button" onClick={()=>loginUser()} disabled={(!username || !password)}>
                     Login
-                </button>
-                <button className="login_button" type="create" onClick={()=>registerUser()} disabled={(!username || !password)}>
+                </button> */}
+                <button className="login_button" type="button" onClick={()=>registerUser()} disabled={(!username || !password)}>
                     Register
                 </button>
             </form>

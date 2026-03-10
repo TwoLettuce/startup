@@ -3,10 +3,17 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
-import {User} from '../src/menu/Leaderboard'
 
 const authCookieName = 'authentication';
 
+class User {
+    constructor(username, password, wins, losses){
+        this.username = username;
+        this.password = password;
+        this.wins = wins;
+        this.losses = losses;
+    }
+}
 class AuthData {
     constructor (username, token){
         this.username = username;
@@ -20,7 +27,6 @@ let games = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
@@ -31,7 +37,6 @@ app.use('/api', apiRouter);
 
 //Test endpoint
 apiRouter.get('/user', (req, res) => {
-    users.push({greeting: 'bonjour!'});
     res.send(users);
 })
 
@@ -41,15 +46,16 @@ apiRouter.post('/user', (req, res) => {
         res.status(409).send({msg: 'User with that Username already exists!'});
     } else {
         createAuthCookie(res);
-        const newUser = User(req.username, req.password, 0, 0);
-        res.send({msg: 'You registered!'})
+        const newUser = new User(req.username, req.password, 0, 0);
+        users.push(newUser);
+        res.send({username: req.username});
     }
 });
 
 
 //generate an authentication token and send it back to client as a cookie
 function createAuthCookie(res){
-    const newAuthData = AuthData(res.username, uuid.v4);
+    const newAuthData = new AuthData(res.username, uuid.v4);
     res.cookie(authCookieName, newAuthData.token, {
         maxAge: 100 * 60 * 60 * 24 * 365,
         secure : true,
@@ -74,3 +80,4 @@ function verifyAuth(req, res, next) {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+

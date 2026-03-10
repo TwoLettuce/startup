@@ -1,16 +1,6 @@
 import React from 'react';
 
-export class User {
-    constructor(username, password, wins, losses){
-        this.username = username;
-        this.password = password;
-        this.wins = wins;
-        this.losses = losses;
-    }
-}
-
-export function Leaderboard( { username, password } ){
-
+export function Leaderboard(){
     const [users, setUsers] = React.useState([]);
     const [queriedUser, setQueriedUser] = React.useState('');
 
@@ -21,35 +11,43 @@ export function Leaderboard( { username, password } ){
         return sortedUsers.sort((a,b) => b.wins - a.wins);
     }
 
-    function deleteUsers(){
-        setUsers([]);
-    }
+    // function deleteUsers(){
+    //     setUsers([]);
+    // }
 
-    React.useEffect(()=>
-        {
-            let users = localStorage.getItem('users');
-            if (users) {
-                users = JSON.parse(users);
-            } else {
-                users = [];
-            }
-            let usernameFound = false;
-            for (const user of users){
-                if (user.username === username) {
-                    usernameFound = true;
-                }
-            }
-            if (!usernameFound){
-                users.push(new User(username, password, 0, 0));
-                localStorage.setItem('users', JSON.stringify(users));
-            }
-            setUsers(users);
+    // React.useEffect(()=>
+    //     {
+            
+    //         let users = localStorage.getItem('users');
+    //         if (users) {
+    //             users = JSON.parse(users);
+    //         } else {
+    //             users = [];
+    //         }
+    //         let usernameFound = false;
+    //         for (const user of users){
+    //             if (user.username === username) {
+    //                 usernameFound = true;
+    //             }
+    //         }
+    //         if (!usernameFound){
+    //             users.push(new User(username, password, 0, 0));
+    //             localStorage.setItem('users', JSON.stringify(users));
+    //         }
+    //         setUsers(users);
 
-        }, []);
+    //     }, []);
 
-    React.useEffect(()=> {
-        localStorage.setItem('users', JSON.stringify(users));
-    }, [users]);
+    React.useEffect(()=> 
+    {
+        fetch('/api/user')
+            .then((response)=> response.json())
+            .then((users) => setUsers(users));
+    }, []);
+
+    // React.useEffect(()=> {
+    //     localStorage.setItem('users', JSON.stringify(users));
+    // }, [users]);
 
     function concatenateUsers(users){
         return users.slice(0,10);
@@ -58,28 +56,27 @@ export function Leaderboard( { username, password } ){
     function getQueriedUsers(){
         let queriedUsers = [];
         for (const user of users) {
-            if (user.username.includes(queriedUser)){
+            if (user.username?.includes(queriedUser)){
                 queriedUsers.push(user);
             }
         }
         return queriedUsers
     }
 
-    function addUser(){
-        const wins = Math.floor(Math.random()*100);
-        const losses = 100-wins;
-        let username = 'user';
-        while (username.length < 9) {
-            username += Math.random().toString(16).substring(2);
-        }
-        username = username.slice(0, 9);
-        const password = "badPassword";
-
-        const thisUser = new User(username, password, wins, losses);
-        let tempUsers = [...users];
-        tempUsers.push(thisUser);
-        setUsers(tempUsers);
-    }
+    // function addUser(){
+    //     const wins = Math.floor(Math.random()*100);
+    //     const losses = 100-wins;
+    //     let username = 'user';
+    //     while (username.length < 9) {
+    //         username += Math.random().toString(16).substring(2);
+    //     }
+    //     username = username.slice(0, 9);
+    //     const password = "badPassword";
+    //     const thisUser = new User(username, password, wins, losses);
+    //     let tempUsers = [...users];
+    //     tempUsers.push(thisUser);
+    //     setUsers(tempUsers);
+    // }
 
     return (
         <section id="leaderboard">
@@ -107,8 +104,8 @@ export function Leaderboard( { username, password } ){
                             ))}
                     </thead>            
                 </table>
-                <button type="join" onClick={()=>addUser()}>Create User</button>
-                <button type="delete" onClick={()=>deleteUsers()}>Delete Users</button>
+                {/* <button type="join" onClick={()=>addUser()}>Create User</button> */}
+                {/* <button type="delete" onClick={()=>deleteUsers()}>Delete Users</button> */}
             </div>
             </section>
     )
