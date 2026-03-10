@@ -17,8 +17,6 @@ export function Unauthenticated(props){
         debugger;
         console.log("here");
         loginOrRegister('/api/user');
-        localStorage.setItem('username', username);
-        props.onLogin(username);
     }
 
     async function loginOrRegister(path){
@@ -33,7 +31,8 @@ export function Unauthenticated(props){
             const body = await response.json();
             setHttpError(`⚠ Error: ${body.msg}`);
         } else {
-            localStorage.setItem('username', username);
+            const body = await response.json();
+            localStorage.setItem('username', body.username);
             props.onLogin(username);
         }
 
@@ -50,9 +49,9 @@ export function Unauthenticated(props){
                 <input type="password" placeholder="Password" value={password} onChange={(input)=> setPassword(input.target.value)}required/>
             </div>
             <form method="get" action="menu">
-                {/* <button className="login_button" type="button" onClick={()=>loginUser()} disabled={(!username || !password)}>
+                <button className="login_button" type="button" onClick={()=>loginUser()} disabled={(!username || !password)}>
                     Login
-                </button> */}
+                </button>
                 <button className="login_button" type="button" onClick={()=>registerUser()} disabled={(!username || !password)}>
                     Register
                 </button>
