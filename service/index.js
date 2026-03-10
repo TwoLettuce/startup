@@ -42,13 +42,14 @@ apiRouter.get('/user', (req, res) => {
 
 //Register Endpoint
 apiRouter.post('/user', (req, res) => {
-    if (users.find((u) => u['username'] === req.username)){
+    console.log('register, ' + req.body.username);
+    if (users.find((u) => u['username'] === req.body.username)){
         res.status(409).send({msg: 'User with that Username already exists!'});
     } else {
         createAuthCookie(res);
-        const newUser = new User(req.username, req.password, 0, 0);
+        const newUser = new User(req.body.username, req.body.password, 0, 0);
         users.push(newUser);
-        res.send({username: req.username});
+        res.send({username: req.body.username});
     }
 });
 
