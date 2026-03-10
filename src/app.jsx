@@ -50,17 +50,12 @@ export default function App() {
                     <Login 
                         username = {username}
                         authState = {authState}
-                        onAuthChange={(username, password, authState) => {
+                        onAuthChange={(username, authState) => {
                             setAuthState(authState)
                             setUsername(username);
-                            setPassword(password);
                         }}
                     />} exact />
-                <Route path='/menu' element={
-                    <Menu
-                    username = {username}
-                    password = {password} 
-                    />} exact />
+                <Route path='/menu' element={<Menu username={username} />} exact />
                 <Route path='/play' element={<Play username={username} />} exact />
                 <Route path='*' element={<NotFound />} exact />
             </Routes>
