@@ -4,12 +4,6 @@ const express = require('express');
 const uuid = require('uuid');
 const app = express();
 
-const authCookieName = 'authentication';
-
-let users = [];
-let authenticated = [];
-let games = [];
-
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
@@ -18,6 +12,14 @@ app.use(express.static('public'));
 
 var apiRouter = express.Router();
 app.use('/api', apiRouter);
+
+const authCookieName = 'authentication';
+
+let users = [];
+let authenticated = [];
+let matches = [];
+
+
 
 class User {
     constructor(username, password, wins, losses){
@@ -31,6 +33,23 @@ class AuthData {
     constructor (username, token){
         this.username = username;
         this.token = token;
+    }
+}
+
+class Match {
+    constructor(matchID, matchName, player1=null, player2=null){
+        this.matchID = matchID
+        this.matchName = matchName
+        this.player1 = player1;
+        this.player2 = player2;
+    }
+
+    setPlayer1(player1){
+        this.player1 = player1;
+    }
+
+    setPlayer2(player2){
+        this.player2 = player2;
     }
 }
 
@@ -55,8 +74,10 @@ apiRouter.get('/authenticated', (req, res) => {
 });
 
 //Test games endpoint
-apiRouter.get('/game', verifyAuth, (req, res) => {
-    res.send(games);
+apiRouter.get('/match', (req, res) => {
+    const match = new Match(Math.floor(Math.random()*100), 'gamex');
+    matches.push(match);
+    res.send(matches);
 });
 
 

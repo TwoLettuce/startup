@@ -8,11 +8,9 @@ export function MatchSelect(props){
 
     React.useEffect(()=>
     {
-        const matches = localStorage.getItem('matches');
-        
-        if (matches){
-            setMatches(JSON.parse(matches));
-        }
+        fetch('/api/match')
+            .then((response)=> response.json())
+            .then((matches) => setMatches(matches));
     }, []
     );
 
@@ -42,11 +40,6 @@ export function MatchSelect(props){
         newMatches.push(newMatch)
         localStorage.setItem("matches", JSON.stringify(matches));
         setMatches(newMatches);
-    }
-
-    function clearMatches() {
-        localStorage.removeItem("matches");
-        setMatches([]);
     }
 
     function updateMatchID() {
