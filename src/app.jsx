@@ -15,6 +15,11 @@ export default function App() {
     const [password, setPassword] = React.useState('');
     const [authState, setAuthState] = React.useState(username ? AuthState.Authenticated : AuthState.Unauthenticated);
 
+    const onAuthChange = (username, authState) => {
+        setAuthState(authState)
+        setUsername(username);
+    }
+
     return (
       <BrowserRouter>
         <div className="body bg-dark text-light">
@@ -45,15 +50,17 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route path='/' element={<Login />} exact />
+                <Route path='/' element={
+                    <Login 
+                        username = {username}
+                        authState = {authState}
+                        onAuthChange={onAuthChange}
+                        />} exact />
                 <Route path='/login' element={
                     <Login 
                         username = {username}
                         authState = {authState}
-                        onAuthChange={(username, authState) => {
-                            setAuthState(authState)
-                            setUsername(username);
-                        }}
+                        onAuthChange={onAuthChange}
                     />} exact />
                 <Route path='/menu' element={<Menu username={username} />} exact />
                 <Route path='/play' element={<Play username={username} />} exact />

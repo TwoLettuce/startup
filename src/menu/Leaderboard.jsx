@@ -11,33 +11,6 @@ export function Leaderboard(){
         return sortedUsers.sort((a,b) => b.wins - a.wins);
     }
 
-    // function deleteUsers(){
-    //     setUsers([]);
-    // }
-
-    // React.useEffect(()=>
-    //     {
-            
-    //         let users = localStorage.getItem('users');
-    //         if (users) {
-    //             users = JSON.parse(users);
-    //         } else {
-    //             users = [];
-    //         }
-    //         let usernameFound = false;
-    //         for (const user of users){
-    //             if (user.username === username) {
-    //                 usernameFound = true;
-    //             }
-    //         }
-    //         if (!usernameFound){
-    //             users.push(new User(username, password, 0, 0));
-    //             localStorage.setItem('users', JSON.stringify(users));
-    //         }
-    //         setUsers(users);
-
-    //     }, []);
-
     React.useEffect(()=> 
     {
         fetch('/api/user')
@@ -62,21 +35,6 @@ export function Leaderboard(){
         }
         return queriedUsers
     }
-
-    // function addUser(){
-    //     const wins = Math.floor(Math.random()*100);
-    //     const losses = 100-wins;
-    //     let username = 'user';
-    //     while (username.length < 9) {
-    //         username += Math.random().toString(16).substring(2);
-    //     }
-    //     username = username.slice(0, 9);
-    //     const password = "badPassword";
-    //     const thisUser = new User(username, password, wins, losses);
-    //     let tempUsers = [...users];
-    //     tempUsers.push(thisUser);
-    //     setUsers(tempUsers);
-    // }
 
     return (
         <section id="leaderboard">
