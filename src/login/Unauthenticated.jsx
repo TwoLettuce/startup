@@ -9,13 +9,9 @@ export function Unauthenticated(props){
 
     function loginUser() {
         loginOrRegister('/api/session');
-        localStorage.setItem('username', username);
-        props.onLogin(username);
     }
 
     function registerUser() {
-        debugger;
-        console.log("here");
         loginOrRegister('/api/user');
     }
 
