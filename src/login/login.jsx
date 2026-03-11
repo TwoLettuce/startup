@@ -4,22 +4,22 @@ import { AuthState } from './authState'
 import { Authenticated } from './Authenticated'
 import { Unauthenticated } from './Unauthenticated'
 
-export function Login({username, authState, onAuthChange}) {
-  
+export function Login(props) {
+
+
   return (
     <main className="login_main">
       <section id="login-UI">
         <h2><u>Raise your Sword!</u></h2>
-        {authState === AuthState.Authenticated && 
-          <Authenticated username = {username} onLogout = {() => 
-            onAuthChange('', AuthState.Unauthenticated)}
+        {props.authState === AuthState.Authenticated && 
+          <Authenticated username = {props.username} 
+          onLogout={()=>props.onAuthChange('', AuthState.Unauthenticated)}
           />
         }
-        {(authState === AuthState.Unauthenticated || !authState)&& 
-          <Unauthenticated username = {username} onLogin={(loginUsername) => 
-            {
-              onAuthChange(loginUsername, AuthState.Authenticated)
-            }}
+        {(props.authState === AuthState.Unauthenticated || !props.authState) && 
+          <Unauthenticated 
+          username = {props.username} 
+          onLogin={(loginUsername)=>props.onAuthChange(loginUsername, AuthState.Authenticated)}
           />
         }
         

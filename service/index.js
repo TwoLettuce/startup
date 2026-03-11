@@ -34,6 +34,15 @@ class AuthData {
     }
 }
 
+//Middleware to verify authentication
+const verifyAuth = async (req, res, next)=> {
+    const authenticate = await findAuth('token', req.cookies[authCookieName]);
+    if (authenticate){
+        next();
+    } else {
+        res.status(401).send({msg: 'Unauthorized'})
+    }
+}
 
 //Test users endpoint
 apiRouter.get('/user', (req, res) => {
@@ -76,8 +85,13 @@ apiRouter.post('/session', (req, res)=> {
 });
 
 //Logout Endpoint
-apiRouter.delete('/session', verifyAuth, (req, res)=> {
+apiRouter.delete('/session', verifyAuth, async (req, res)=> {
+    const authData = await findAuth('token', req.cookies[authCookieName]);
 
+    console.log('logout, ' + authData.username);
+    authenticated = authenticated.filter((auth) => auth['token'] !== req.cookies[authCookieName]);
+    res.clearCookie(authCookieName);
+    res.status(204).end();
 })
 
 
@@ -89,21 +103,15 @@ function createAuthCookie(username, res){
         maxAge: 100 * 60 * 60 * 24 * 365,
         secure : true,
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: 'strict'
     });
     authenticated.push(newAuthData);
 }
 
-//Middleware to verify authentication
-function verifyAuth(req, res, next) {
-    const authenticate = authenticated.find((u) => u['token'] == req.cookies[authCookieName]);
-    if (authenticate){
-        next();
-    } else {
-        res.status(401).send({msg: 'Unauthorized'})
-    }
+async function findAuth(field, value){
+    if (!value) return null;    
+    return authenticated.find((u) => u[field] === value);
 }
-
 
 // log when listening
 app.listen(port, () => {

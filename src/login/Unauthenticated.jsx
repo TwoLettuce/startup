@@ -1,11 +1,10 @@
 import React from "react";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { MessageDialog } from "./MessageDialogue";
 
 export function Unauthenticated(props){
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [httpError, setHttpError] = React.useState(null);
+    const [httpError, setHttpError] = React.useState('');
 
     function loginUser() {
         loginOrRegister('/api/session');
@@ -58,13 +57,3 @@ export function Unauthenticated(props){
     )
 }
 
-function MessageDialog(props) {
-    return (
-    <Modal {...props} show={props.message} centered>
-      <Modal.Body>{props.message}</Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
