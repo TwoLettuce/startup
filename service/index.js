@@ -73,14 +73,6 @@ apiRouter.get('/authenticated', (req, res) => {
     res.send(JSON.stringify(authenticated));
 });
 
-//Test games endpoint
-apiRouter.get('/match', (req, res) => {
-    const match = new Match(Math.floor(Math.random()*100), 'gamex');
-    matches.push(match);
-    res.send(matches);
-});
-
-
 //Register Endpoint
 apiRouter.post('/user', (req, res) => {
     console.log('register, ' + req.body.username);
@@ -113,8 +105,22 @@ apiRouter.delete('/session', verifyAuth, async (req, res)=> {
     authenticated = authenticated.filter((auth) => auth['token'] !== req.cookies[authCookieName]);
     res.clearCookie(authCookieName);
     res.status(204).end();
-})
+});
 
+//Get matches endpoint
+apiRouter.get('/match', (req, res) => {
+    res.send(matches);
+});
+
+//create game endpoint
+apiRouter.post('/match', verifyAuth, (req, res) => {
+    console.log('create game');
+    const matchName = req.body.matchName;
+    const id = generateUMID();
+    const newMatch = new Match(id, matchName);
+    matches.push(newMatch);
+    res.send(id);
+});
 
 //generate an authentication token and send it back to client as a cookie
 function createAuthCookie(username, res){
@@ -127,6 +133,20 @@ function createAuthCookie(username, res){
         sameSite: 'strict'
     });
     authenticated.push(newAuthData);
+}
+
+function generateUMID(){
+    let id;
+    while (true){
+        id = Math.floor(Math.random()*100)
+        let unique = true;
+        for (const match of matches){
+            unique = match.matchID === id ? false : true;
+        }
+        if (unique) break;
+    }
+
+    return id;
 }
 
 async function findAuth(field, value){

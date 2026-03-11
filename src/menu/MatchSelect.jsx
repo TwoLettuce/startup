@@ -1,10 +1,12 @@
 import React from 'react';
+import { MessageDialog } from '../login/MessageDialogue';
 
 export function MatchSelect(props){
     const [matchID, setMatchID] = React.useState(0);
     const [gameName, setGameName] = React.useState('');
     const [matches, setMatches] = React.useState([]);
     const [queriedID, setQueriedID] = React.useState('');
+    const [httpError, setHttpError] = React.useState(null);
 
     React.useEffect(()=>
     {
@@ -14,52 +16,22 @@ export function MatchSelect(props){
     }, []
     );
 
-    function addNewMatch(matchName){
-        let nextAvailableID = updateMatchID();
-        let newMatches = matches;
-        class match {
-            constructor(matchID, matchName, player1=null, player2=null){
-                this.matchID = matchID
-                this.matchName = matchName
-                this.player1 = player1;
-                this.player2 = player2;
+    async function addNewMatch(matchName){
+        const response = await fetch('/api/match', {
+            method: 'post',
+            body: JSON.stringify({matchName: matchName}),
+            headers : {
+                'Content-type': 'application/json; charset=UTF-8'
             }
-
-            setPlayer1(player1){
-                this.player1 = player1;
-            }
-
-            setPlayer2(player2){
-                this.player2 = player2;
-            }
+        })
+        if (response.status === 200){
+            fetch('api/match')
+            .then((response)=>response.json())
+            .then((matches)=>setMatches(matches));
+        } else {
+            const body = await response.json();
+            setHttpError(`⚠ Error: ${body.msg}`);
         }
-
-
-        const newMatch = new match(nextAvailableID, matchName); 
-        
-        newMatches.push(newMatch)
-        localStorage.setItem("matches", JSON.stringify(matches));
-        setMatches(newMatches);
-    }
-
-    function updateMatchID() {
-        let idUnique = false;
-        let nextAvailableID = matchID;
-        while (!idUnique){
-            let loopBroken = false;
-            for (const match of matches){
-                if (match.matchID == nextAvailableID){
-                    nextAvailableID++;
-                    loopBroken=true;
-                    break;
-                }
-            }
-            if (!loopBroken){
-                idUnique = true;
-            }
-        }
-        setMatchID(nextAvailableID + 1);
-        return nextAvailableID;
     }
 
     function concatenatedMatches(matchesList){
@@ -113,7 +85,8 @@ export function MatchSelect(props){
             <input id="create_button" className='create_input' type='text' placeholder='Game Name' onChange={(input)=>setGameName(input.target.value)} required/>
             
             <button type="join" disabled={!gameName} onClick={()=>addNewMatch(gameName)}>Create Match</button>
-            <button type="join" onClick={()=>clearMatches()}>Clear Local Matches</button>
+            
+            <MessageDialog message={httpError} onHide={() => setHttpError(null)} />
         </section>
     );
 }
