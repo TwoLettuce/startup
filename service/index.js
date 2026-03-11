@@ -41,12 +41,12 @@ apiRouter.get('/user', (req, res) => {
 })
 
 //Test auth endpoint
-apiRouter.get('/auth/authenticated', (req, res) => {
+apiRouter.get('/authenticated', (req, res) => {
     res.send(JSON.stringify(authenticated));
 });
 
 //Test games endpoint
-apiRouter.get('/auth/game', verifyAuth, (req, res) => {
+apiRouter.get('/game', verifyAuth, (req, res) => {
     res.send(games);
 });
 
@@ -75,6 +75,10 @@ apiRouter.post('/session', (req, res)=> {
     }
 });
 
+//Logout Endpoint
+apiRouter.delete('/session', verifyAuth, (req, res)=> {
+
+})
 
 
 //generate an authentication token and send it back to client as a cookie
@@ -92,8 +96,8 @@ function createAuthCookie(username, res){
 
 //Middleware to verify authentication
 function verifyAuth(req, res, next) {
-    const user = users.find((u) => u[token].token == req.cookies[authCookieName]);
-    if (user){
+    const authenticate = authenticated.find((u) => u['token'] == req.cookies[authCookieName]);
+    if (authenticate){
         next();
     } else {
         res.status(401).send({msg: 'Unauthorized'})
