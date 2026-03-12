@@ -7,7 +7,7 @@ export function Victory(props){
             <h2 className='victory_text'>
                 You Win!
             </h2>
-            <ReturnToMenu victor={props.victor}/>
+            <ReturnToMenu victor={props.victor} matchID={props.matchID}/>
         </div>
     )
 }

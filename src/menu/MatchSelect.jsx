@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 export function MatchSelect(props){
     const navigate = useNavigate();
-    const [matchID, setMatchID] = React.useState(0);
     const [gameName, setGameName] = React.useState('');
     const [matches, setMatches] = React.useState([]);
     const [queriedID, setQueriedID] = React.useState('');
@@ -29,7 +28,7 @@ export function MatchSelect(props){
             headers : {
                 'Content-type': 'application/json; charset=UTF-8'
             }
-        })
+        });
         const body = await response.json();
         if (response.status === 200){
             reloadMatches();
@@ -43,14 +42,14 @@ export function MatchSelect(props){
         event.preventDefault();
         const response = await fetch('/api/match', {
             method: 'put',
-            body: JSON.stringify({matchID: matchID, playerNo, playerNo}),
+            body: JSON.stringify({matchID: matchID, playerNo: playerNo}),
             headers : {
                 'Content-type': 'application/json; charset=UTF-8'
             }
         });
-
         if (response.status === 200){
             console.log("going to play!");
+            props.setMatchID(matchID);
             navigate('/play');
         } else {
             const body = await response.json();
