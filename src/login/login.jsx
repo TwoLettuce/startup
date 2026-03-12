@@ -8,24 +8,14 @@ export function Login(props) {
   const [deals, setDeals] = React.useState([]);
 
   React.useEffect(()=>{
-    async function getGameDeals(){
-      const response = await fetch("https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15");
-      const data = await response.json();
-      console.log("Retry in " + response.headers);
-      console.log(data);
-      return data;
-    }
 
-    fetch("https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15")
+    fetch('/api/deals')
       .then(async (response) => {
-        if (response.status === 429) {
-        const retryAfter = response.headers.get('Retry-After');
-        console.log("Rate limited. Retry after:", retryAfter, "seconds");
-        return;
-        }
         return await response.json();
       })
-      .then(data => setDeals(data))
+      .then(data => {
+        console.log(data);
+        setDeals(data)})
       .catch(err => {
         console.log(err);
         setDeals([]);
