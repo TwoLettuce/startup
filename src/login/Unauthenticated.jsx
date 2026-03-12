@@ -37,13 +37,13 @@ export function Unauthenticated(props){
         <section>
             <div id="username">
                 Username: 
-                <input type="text" placeholder="Username" value={username} onChange={(input)=> setUsername(input.target.value)} required/>
+                <input name="username" type="text" placeholder="Username" autoComplete="true" value={username} onChange={(input)=> setUsername(input.target.value)} required/>
             </div>
             <div id="password">
                 Password: 
-                <input type="password" placeholder="Password" value={password} onChange={(input)=> setPassword(input.target.value)}required/>
+                <input name="password" type="password" placeholder="Password" value={password} onChange={(input)=> setPassword(input.target.value)}required/>
             </div>
-            <form method="get" action="menu">
+            <form id="login" method="get" action="menu">
                 <button className="login_button" type="button" onClick={()=>loginUser()} disabled={(!username || !password)}>
                     Login
                 </button>
