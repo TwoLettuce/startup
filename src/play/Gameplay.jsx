@@ -150,6 +150,13 @@ export function Gameplay(props) {
         doEnemyTurn();
     }
 
+    function doEnemyTurn(){
+        const moveNo = Math.floor(Math.random() * 4) + 1;
+        switch (moveNo){
+            default: console.log("enemy turn taken");
+        }
+    }
+
     return (
         <samp>
             <section id="character-info">

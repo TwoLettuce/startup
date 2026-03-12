@@ -12,7 +12,7 @@ const NAVBAR_ROUTES = ['/login', '/play', '/menu'];
 
 export default function App() {
     const [username, setUsername] = React.useState(localStorage.getItem('username'));
-    const [password, setPassword] = React.useState('');
+    const [matchID, setMatchID] = React.useState(0);
     const [authState, setAuthState] = React.useState(username ? AuthState.Authenticated : AuthState.Unauthenticated);
 
     const onAuthChange = (username, authState) => {
@@ -62,8 +62,8 @@ export default function App() {
                         authState = {authState}
                         onAuthChange={onAuthChange}
                     />} exact />
-                <Route path='/menu' element={<Menu username={username} />} exact />
-                <Route path='/play' element={<Play username={username} />} exact />
+                <Route path='/menu' element={<Menu username={username} setMatchID={setMatchID} />} exact />
+                <Route path='/play' element={<Play username={username} matchID={matchID} />} exact />
                 <Route path='*' element={<NotFound />} exact />
             </Routes>
 

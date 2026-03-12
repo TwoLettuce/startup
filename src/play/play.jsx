@@ -21,7 +21,7 @@ export function Play(props) {
         if (confirm('Are you sure you want to resign?')){
             const response = await fetch('/api/result', {
                 method: 'put',
-                body: JSON.stringify({victor: false}),
+                body: JSON.stringify({victor: false, matchID: props.matchID}),
                 headers : {
                     'Content-type': 'application/json; charset=UTF-8'
                 }
@@ -51,8 +51,8 @@ export function Play(props) {
                     </div>
                 </div>
             }
-            {gameWon && <Victory victor={true}/>}
-            {gameLost && <Defeat victor={false}/>}
+            {gameWon && <Victory victor={true} matchID={props.matchID} />}
+            {gameLost && <Defeat victor={false} matchID={props.matchID} />}
             
         </main>
     );

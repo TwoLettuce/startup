@@ -176,6 +176,8 @@ apiRouter.put('/result', verifyAuth, async (req, res) => {
         user.incrementLosses();
     }
     users[userIndex] = user;
+
+    matches = matches.filter(m => m.matchID != req.body.matchID);
     res.end();
 })
 

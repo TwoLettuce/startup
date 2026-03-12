@@ -8,7 +8,7 @@ export function ReturnToMenu(props){
     async function updateWinsAndLosses(){
         await fetch('/api/result', {
             method: 'put',
-            body: JSON.stringify({victor: props.victor}),
+            body: JSON.stringify({victor: props.victor, matchID: props.matchID}),
             headers : {
                 'Content-type': 'application/json; charset=UTF-8'
             }
