@@ -73,9 +73,11 @@ export function Gameplay(props) {
     React.useEffect(()=> {
         if (playerHealth <= 0) {
             setPlayerHealth(0);
+            props.setFinalEnemyHealth(enemyHealth);
             props.setGameLost(true);
         } else if (enemyHealth <= 0){
             setEnemyHealth(0);
+            props.setFinalPlayerHealth(playerHealth);
             props.setGameWon(true);
         }
 
@@ -111,6 +113,9 @@ export function Gameplay(props) {
     function onPressed(move) {
         let playerHealthChange = 0;
         let enemyHealthChange = 0;
+        let enemyMove = generateMove();
+        while (!(enemyMove.mana < enemyMana))
+            enemyMove = generateMove();
         //player turn
         if (allowMoveSelect && move.mana <= playerMana){
             //setAllowMoveSelect(false);
@@ -123,7 +128,11 @@ export function Gameplay(props) {
                 let hit = Math.floor(Math.random() * 100);
                 if (hit < move.accuracy){
                     console.log("move hits!");
-                    enemyHealthChange-=move.power;
+                    if (enemyMove.type === "block"){
+                        enemyHealthChange-=Math.floor(move.power*.2);
+                    } else {
+                        enemyHealthChange-=move.power;
+                    }
                 } else {
                     console.log("oof! miss!");
                 }
@@ -135,7 +144,11 @@ export function Gameplay(props) {
                 let hit = Math.floor(Math.random() * 100);
                 if (hit < move.accuracy){
                     console.log("move hits!");
-                    enemyHealthChange-=move.power;
+                    if (enemyMove.type === "block"){
+                        enemyHealthChange-=Math.floor(move.power*.2);
+                    } else {
+                        enemyHealthChange-=move.power;
+                    }
                 } else {
                     console.log("oof! miss!");
                 }
@@ -153,37 +166,43 @@ export function Gameplay(props) {
         }
 
         //enemy turn
-        move = generateMove();
-        while (!(move.mana < enemyMana))
-            move = generateMove();
-        GameNotifier.broadcastEvent(props.username, GameEvent.Move, move.name);
-        setEnemyMana(enemyMana-move.mana);
-        if (move.type === 'dmg'){
+        
+        GameNotifier.broadcastEvent(props.enemyUsername, GameEvent.Move, enemyMove.name);
+        setEnemyMana(enemyMana-enemyMove.mana);
+        if (enemyMove.type === 'dmg'){
             
             if (playerBurning){
                 playerHealthChange-=10;
             }
             let hit = Math.floor(Math.random() * 100);
-            if (hit < move.accuracy){
+            if (hit < enemyMove.accuracy){
                 console.log("enemy hits!");
-                playerHealthChange-=move.power;
+                if (move.type === "block"){
+                    playerHealthChange-=Math.floor(enemyMove.power*.2);
+                } else {
+                    playerHealthChange-=enemyMove.power;
+                }
             } else {
                 console.log("enemy miss!");
             }
-        } else if (move.type === 'heal'){
-            enemyHealthChange+=move.power;
-        } else if (move.type === 'block') {
-            GameNotifier.broadcastEvent(props.username, GameEvent.Blocking, {});
-        } else if (move.type === 'hybrid') {
+        } else if (enemyMove.type === 'heal'){
+            enemyHealthChange+=enemyMove.power;
+        } else if (enemyMove.type === 'block') {
+            GameNotifier.broadcastEvent(props.enemyUsername, GameEvent.Blocking, {});
+        } else if (enemyMove.type === 'hybrid') {
             let hit = Math.floor(Math.random() * 100);
-            if (hit < move.accuracy){
+            if (hit < enemyMove.accuracy){
                 console.log("enemy hits!");
-                playerHealthChange-=move.power;
+                if (move.type === "block"){
+                    playerHealthChange-=Math.floor(enemyMove.power*.2);
+                } else {
+                    playerHealthChange-=enemyMove.power;
+                }
             } else {
                 console.log("enemy miss!");
             }
-            enemyHealthChange+=move.power*2;
-        } else if (move.type === 'burn'){
+            enemyHealthChange+=enemyMove.power*2;
+        } else if (enemyMove.type === 'burn'){
             setPlayerBurning(3);
             console.log("Enemy now burning");
         }

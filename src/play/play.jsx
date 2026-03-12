@@ -15,6 +15,8 @@ export function Play(props) {
     const [confirmed, setConfirmed] = React.useState(false);
     const [gameWon, setGameWon] = React.useState(false);
     const [gameLost, setGameLost] = React.useState(false);
+    const [finalPlayerHealth, setFinalPlayerHealth] = React.useState(0);
+    const [finalEnemyHealth, setFinalEnemyHealth] = React.useState(0);
     
 
     async function resignConfirmation(){
@@ -45,14 +47,17 @@ export function Play(props) {
                     enemyCharacter={enemyCharacter} 
                     enemyUsername={enemyUsername}
                     setGameWon={setGameWon}
-                    setGameLost={setGameLost} />
+                    setGameLost={setGameLost}
+                    setFinalPlayerHealth={setFinalPlayerHealth}
+                    setFinalEnemyHealth={setFinalEnemyHealth}
+                    />
                     <div id="resign-button">
                         <button onClick={resignConfirmation} id="resign">Resign game</button>
                     </div>
                 </div>
             }
-            {gameWon && <Victory victor={true} matchID={props.matchID} />}
-            {gameLost && <Defeat victor={false} matchID={props.matchID} />}
+            {gameWon && <Victory victor={true} matchID={props.matchID} finalPlayerHealth={finalPlayerHealth} finalEnemyHealth={finalEnemyHealth} />}
+            {gameLost && <Defeat victor={false} matchID={props.matchID} finalPlayerHealth={finalPlayerHealth} finalEnemyHealth={finalEnemyHealth} />}
             
         </main>
     );
