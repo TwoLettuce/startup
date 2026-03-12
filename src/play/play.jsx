@@ -47,14 +47,12 @@ export function Play(props) {
                     setGameWon={setGameWon}
                     setGameLost={setGameLost} />
                     <div id="resign-button">
-                        <form onClick={resignConfirmation()}>
-                            <button id="resign">Resign game</button>
-                        </form>
+                        <button onClick={resignConfirmation} id="resign">Resign game</button>
                     </div>
                 </div>
             }
-            {gameWon && <Victory />}
-            {gameLost && <Defeat />}
+            {gameWon && <Victory victor={true}/>}
+            {gameLost && <Defeat victor={false}/>}
             
         </main>
     );
