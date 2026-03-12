@@ -177,6 +177,7 @@ apiRouter.put('/result', verifyAuth, async (req, res) => {
     }
     users[userIndex] = user;
 
+    console.log("Deleting match " + req.body.matchID);
     matches = matches.filter(m => m.matchID != req.body.matchID);
     res.end();
 })

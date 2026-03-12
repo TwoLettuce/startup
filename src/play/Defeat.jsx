@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReturnToMenu } from './ReturnToMenu';
 
 export function Defeat(props){
      return (
