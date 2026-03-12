@@ -182,6 +182,19 @@ apiRouter.put('/result', verifyAuth, async (req, res) => {
     res.end();
 })
 
+//Deals endpoint
+apiRouter.get('/deals', async (req, res)=>{
+    fetch("https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15")
+      .then(async (response) => {
+        return await response.json();
+      })
+      .then(data => res.send(data))
+      .catch(err => {
+        console.log(err);
+        res.send([]);
+      });
+})
+
 //generate an authentication token and send it back to client as a cookie
 function createAuthCookie(username, res){
     const newAuthData = new AuthData(username, uuid.v4());
