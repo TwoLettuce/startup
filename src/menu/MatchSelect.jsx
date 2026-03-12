@@ -51,7 +51,7 @@ export function MatchSelect(props){
 
         if (response.status === 200){
             console.log("going to play!");
-            navigate('/play')
+            navigate('/play');
         } else {
             const body = await response.json();
             setHttpError(`⚠ Error: ${body.msg}`);
