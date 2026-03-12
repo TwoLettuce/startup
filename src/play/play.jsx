@@ -17,9 +17,16 @@ export function Play(props) {
     const [gameLost, setGameLost] = React.useState(false);
     
 
-    function resignConfirmation(){
+    async function resignConfirmation(){
         if (confirm('Are you sure you want to resign?')){
-            await apiRouter.post('/api/result')
+            const response = await fetch('/api/result', {
+                method: 'put',
+                body: JSON.stringify({victor: false}),
+                headers : {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            });
+            navigate('/menu');
         }
     }
 
