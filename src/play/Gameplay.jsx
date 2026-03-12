@@ -2,6 +2,8 @@ import React from "react";
 import { Buttons } from "./Buttons";
 import { WebSocketText } from './WebSocketText';
 import { GameEvent, GameNotifier } from './GameNotifier';
+import { Character } from "./Character";
+import { Move } from "./Buttons";
 
 
 export function Gameplay(props) {
@@ -11,6 +13,7 @@ export function Gameplay(props) {
     const [enemyMana, setEnemyMana] = React.useState(props.enemyCharacter.startingMana());
     const [allowMoveSelect, setAllowMoveSelect] = React.useState(true);
     const [enemyBurning, setEnemyBurning] = React.useState(0);
+    const [playerBurning, setPlayerBurning] = React.useState(0);
     const [events, setEvent] = React.useState([]);
 
     const playerHPRef = React.useRef(playerHealth);
@@ -106,35 +109,37 @@ export function Gameplay(props) {
     );
 
     function onPressed(move) {
+        let playerHealthChange = 0;
+        let enemyHealthChange = 0;
+        //player turn
         if (allowMoveSelect && move.mana <= playerMana){
             //setAllowMoveSelect(false);
             GameNotifier.broadcastEvent(props.username, GameEvent.Move, move.name);
             setPlayerMana(playerMana-move.mana);
             if (move.type === 'dmg'){
-                let damage = move.power;
                 if (enemyBurning){
-                    damage += 10;
+                    enemyHealthChange-=10;
                 }
                 let hit = Math.floor(Math.random() * 100);
                 if (hit < move.accuracy){
                     console.log("move hits!");
-                    setEnemyHealth(enemyHealth-damage);
+                    enemyHealthChange-=move.power;
                 } else {
                     console.log("oof! miss!");
                 }
             } else if (move.type === 'heal'){
-                setPlayerHealth(playerHealth+move.power);
+                playerHealthChange+=move.power;
             } else if (move.type === 'block') {
                 GameNotifier.broadcastEvent(props.username, GameEvent.Blocking, {});
             } else if (move.type === 'hybrid') {
                 let hit = Math.floor(Math.random() * 100);
                 if (hit < move.accuracy){
                     console.log("move hits!");
-                    setEnemyHealth(enemyHealth-move.power);
+                    enemyHealthChange-=move.power;
                 } else {
                     console.log("oof! miss!");
                 }
-                setPlayerHealth(playerHealth+move.power*2);
+                playerHealthChange+=move.power*2;
             } else if (move.type === 'burn'){
                 setEnemyBurning(3);
                 console.log("Enemy now burning");
@@ -147,16 +152,89 @@ export function Gameplay(props) {
             GameNotifier.broadcastEvent(props.username, GameEvent.Mana);
         }
 
-        doEnemyTurn();
-    }
-
-    function doEnemyTurn(){
-        const moveNo = Math.floor(Math.random() * 4) + 1;
-        switch (moveNo){
-            default: console.log("enemy turn taken");
+        //enemy turn
+        move = generateMove();
+        while (!(move.mana < enemyMana))
+            move = generateMove();
+        GameNotifier.broadcastEvent(props.username, GameEvent.Move, move.name);
+        setEnemyMana(enemyMana-move.mana);
+        if (move.type === 'dmg'){
+            
+            if (playerBurning){
+                playerHealthChange-=10;
+            }
+            let hit = Math.floor(Math.random() * 100);
+            if (hit < move.accuracy){
+                console.log("enemy hits!");
+                playerHealthChange-=move.power;
+            } else {
+                console.log("enemy miss!");
+            }
+        } else if (move.type === 'heal'){
+            enemyHealthChange+=move.power;
+        } else if (move.type === 'block') {
+            GameNotifier.broadcastEvent(props.username, GameEvent.Blocking, {});
+        } else if (move.type === 'hybrid') {
+            let hit = Math.floor(Math.random() * 100);
+            if (hit < move.accuracy){
+                console.log("enemy hits!");
+                playerHealthChange-=move.power;
+            } else {
+                console.log("enemy miss!");
+            }
+            enemyHealthChange+=move.power*2;
+        } else if (move.type === 'burn'){
+            setPlayerBurning(3);
+            console.log("Enemy now burning");
         }
+        if (playerBurning) {
+            setPlayerBurning(playerBurning-1);
+            console.log("Player burned. Burning for " + playerBurning + " more turns.");
+        }
+
+        setPlayerHealth(playerHealth + playerHealthChange);
+        setEnemyHealth(enemyHealth + enemyHealthChange);
     }
 
+    function generateMove(){
+        const moveNo = Math.floor(Math.random() * 4) + 1;
+        let move;
+        switch (moveNo){
+            case 1: 
+                if (props.enemyCharacter === Character.Knight)
+                    move = new Move("Wide Sweep", "dmg", 10, 100, 0);
+                else if (props.enemyCharacter === Character.Wizard)
+                    move = new Move("Fireball", "dmg", 15, 75, 8);
+                else if (props.enemyCharacter === Character.Dragon)
+                    move = new Move("Scratch", "dmg", 5, 100, 0);
+                break;
+            case 2:
+                if (props.enemyCharacter === Character.Knight)
+                    move = new Move("Corageous Charge", "dmg", 16, 85, 0);
+                else if (props.enemyCharacter === Character.Wizard)
+                    move = new Move("Eldritch Blast", "dmg", 20, 50, 20);
+                else if (props.enemyCharacter === Character.Dragon)
+                    move = new Move("Breathe Fire", "burn", 0, 100, 0);
+                break;
+            case 3:
+                if (props.enemyCharacter === Character.Knight)
+                    move = new Move("Raise Shield", "block");
+                else if (props.enemyCharacter === Character.Wizard)
+                    move = new Move("Mana Barrier", "block", 0, 0, 5);
+                else if (props.enemyCharacter === Character.Dragon)
+                    move = new Move("Flying Strike", "dmg", 10, 80, 5);
+                break;
+            case 4:
+                if (props.enemyCharacter === Character.Knight)
+                    move = new Move("Faithful Appeal", "heal", 10, 0, 5);
+                else if (props.enemyCharacter === Character.Wizard)
+                    move = new Move("Siphon Life", "hybrid", 5, 100, -5);
+                else if (props.enemyCharacter === Character.Dragon)
+                    move = new Move("Stomp", "dmg", 12, 70, 0);
+                break;
+        }
+        return move;
+    }
     return (
         <samp>
             <section id="character-info">
