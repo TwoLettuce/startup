@@ -10,9 +10,7 @@ export function MatchSelect(props){
 
     React.useEffect(()=>
     {
-        fetch('/api/match')
-            .then((response)=> response.json())
-            .then((matches) => setMatches(matches));
+        reloadMatches();
     }, []
     );
 
@@ -25,12 +23,31 @@ export function MatchSelect(props){
             }
         })
         if (response.status === 200){
-            fetch('api/match')
-            .then((response)=>response.json())
-            .then((matches)=>setMatches(matches));
+            reloadMatches();
         } else {
             const body = await response.json();
             setHttpError(`⚠ Error: ${body.msg}`);
+        }
+    }
+
+    async function joinMatch(event, matchID, playerNo) {
+        event.preventDefault();
+        console.log("MatchID: " + matchID + "\nPlayer No. " + playerNo);
+        const response = await fetch('/api/match', {
+            method: 'put',
+            body: JSON.stringify({matchID: matchID, playerNo, playerNo}),
+            headers : {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        });
+
+        if (response.status === 200){
+            reloadMatches();
+            window.location.href = '/play';
+        } else if (response.status === 403) {
+            //already taken
+        } else if (response.status === 400) {
+            //bad request
         }
     }
 
@@ -49,6 +66,12 @@ export function MatchSelect(props){
         return queriedMatches;
     }
 
+    function reloadMatches(){
+        fetch('api/match')
+            .then((response)=>response.json())
+            .then((matches)=>setMatches(matches));
+    }
+
     return (
         <section id="matches">
             <h4>Matches</h4>
@@ -56,9 +79,14 @@ export function MatchSelect(props){
                 <b>Search: </b>
                 <input id="match_search" type="number" placeholder="Match ID" onChange={(input)=>setQueriedID(input.target.value)}/>
             </div>
-            <form method="get" action="play">
-                <button type="join" >Join Match</button>
-            </form>
+            <div className="join_buttons">
+                <form onSubmit={()=>joinMatch(event, queriedID, 1)}>
+                    <button type="submit" disabled={!queriedID}>Join as Player 1</button>
+                </form>
+                <form onSubmit={()=>joinMatch(event, queriedID, 2)}>
+                    <button type="submit" disabled={!queriedID}>Join as Player 2</button>
+                </form>
+            </div>
             <div>
                 <table>
                     <thead>
