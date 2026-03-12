@@ -38,7 +38,17 @@ main {
     background-color: bisque;
 }
 
-li:hover {
+.menu:hover {
+    border: solid black;
+    background-color: floralwhite;
+}
+
+.home:hover {
+    border: solid black;
+    background-color: floralwhite;
+}
+
+.play:hover {
     border: solid black;
     background-color: floralwhite;
 }
