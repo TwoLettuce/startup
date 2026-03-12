@@ -127,12 +127,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Service accessible in frontend
+- [x] **Static middleware for frontend** - middleware serves to authenticate users for endpoints requiring authentication
+- [x] **Calls to third party endpoints** - login page has an external API call. It won't work right if you reload the page too much because only so many requests can be made. 
+- [x] **Backend service endpoints** - Several service endpoints support login, registration, game creation, joining games, and getting 3rd party API calls.
+- [x] **Frontend calls service endpoints** - frontend makes use of service to verify authentication, get a leaderboard, register, get the list of games, add games, etc.
+- [x] **Supports registration, login, logout, and restricted endpoint** - Supports all identified endpoints.
 
 ## 🚀 DB deliverable
 
