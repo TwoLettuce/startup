@@ -1,7 +1,10 @@
 import React from 'react';
 import { MessageDialog } from '../login/MessageDialogue';
+import { useNavigate } from 'react-router-dom';
+
 
 export function MatchSelect(props){
+    const navigate = useNavigate();
     const [matchID, setMatchID] = React.useState(0);
     const [gameName, setGameName] = React.useState('');
     const [matches, setMatches] = React.useState([]);
@@ -10,11 +13,16 @@ export function MatchSelect(props){
 
     React.useEffect(()=>
     {
-        reloadMatches();
+        async function reload(){
+            await reloadMatches();
+        }
+        reload();
     }, []
     );
 
     async function addNewMatch(matchName){
+        document.getElementById('create_button').value = '';
+        setGameName('');
         const response = await fetch('/api/match', {
             method: 'post',
             body: JSON.stringify({matchName: matchName}),
@@ -22,17 +30,17 @@ export function MatchSelect(props){
                 'Content-type': 'application/json; charset=UTF-8'
             }
         })
+        const body = await response.json();
         if (response.status === 200){
             reloadMatches();
+            setHttpError(`Game created with id: ${body.id}`);
         } else {
-            const body = await response.json();
             setHttpError(`⚠ Error: ${body.msg}`);
         }
     }
 
     async function joinMatch(event, matchID, playerNo) {
         event.preventDefault();
-        console.log("MatchID: " + matchID + "\nPlayer No. " + playerNo);
         const response = await fetch('/api/match', {
             method: 'put',
             body: JSON.stringify({matchID: matchID, playerNo, playerNo}),
@@ -42,12 +50,11 @@ export function MatchSelect(props){
         });
 
         if (response.status === 200){
-            reloadMatches();
-            window.location.href = '/play';
-        } else if (response.status === 403) {
-            //already taken
-        } else if (response.status === 400) {
-            //bad request
+            console.log("going to play!");
+            navigate('/play')
+        } else {
+            const body = await response.json();
+            setHttpError(`⚠ Error: ${body.msg}`);
         }
     }
 
@@ -66,7 +73,7 @@ export function MatchSelect(props){
         return queriedMatches;
     }
 
-    function reloadMatches(){
+    async function reloadMatches(){
         fetch('api/match')
             .then((response)=>response.json())
             .then((matches)=>setMatches(matches));
