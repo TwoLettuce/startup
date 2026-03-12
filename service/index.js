@@ -112,15 +112,34 @@ apiRouter.get('/match', (req, res) => {
     res.send(matches);
 });
 
-//create game endpoint
+//create match endpoint
 apiRouter.post('/match', verifyAuth, (req, res) => {
     console.log('create game');
     const matchName = req.body.matchName;
     const id = generateUMID();
-    const newMatch = new Match(id, matchName);
-    matches.push(newMatch);
-    res.send(id);
+    if (id < 0) {
+        res.status(400).send({msg: "No more games can be created."});
+    } else {
+        const newMatch = new Match(id, matchName);
+        matches.push(newMatch);
+        res.send(id);
+    }
 });
+
+//join match endpoint
+apiRouter.put('/match', verifyAuth, async (req, res) => {
+    const authData = await findAuth('token', req.cookies[authCookieName]);
+    const matchID = req.body.matchID;
+    const match = matches.find(m => m.matchID == matchID);
+    const matchIndex = matches.indexOf(match);
+    console.log(matchIndex + ": " + match);
+    if (req.body.playerNo === 1){
+        match.setPlayer1(authData.username);
+    } else if (req.body.playerNo === 2){
+        match.setPlayer2(authData.username);
+    }
+    matches[matchIndex] = match;
+})
 
 //generate an authentication token and send it back to client as a cookie
 function createAuthCookie(username, res){
@@ -137,11 +156,16 @@ function createAuthCookie(username, res){
 
 function generateUMID(){
     let id;
+    let iters = 0;
+
     while (true){
-        id = Math.floor(Math.random()*100)
+        iters++;
+        id = Math.floor(Math.random()*1000)
         let unique = true;
         for (const match of matches){
             unique = match.matchID === id ? false : true;
+            if (!unique) break;
+            if (iters > 1000) return -1;
         }
         if (unique) break;
     }
