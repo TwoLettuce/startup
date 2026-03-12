@@ -4,8 +4,11 @@ import { CharacterSelect } from './CharacterSelect';
 import { Gameplay } from './Gameplay';
 import { Defeat } from './Defeat';
 import { Victory } from './Victory';
+import { useNavigate } from 'react-router-dom';
 
 export function Play(props) {
+    const navigate = useNavigate();
+
     const [character, setCharacter] = React.useState('none');
     const [enemyUsername, setEnemyUsername] = React.useState('Dr. Jensen');
     const [enemyCharacter, setEnemyCharacter] = React.useState('none');
@@ -15,9 +18,9 @@ export function Play(props) {
     
 
     function resignConfirmation(){
-        return (
-            ()=>confirm('Are you sure you want to resign?')
-        )
+        if (confirm('Are you sure you want to resign?')){
+            await apiRouter.post('/api/result')
+        }
     }
 
     return (
@@ -37,7 +40,7 @@ export function Play(props) {
                     setGameWon={setGameWon}
                     setGameLost={setGameLost} />
                     <div id="resign-button">
-                        <form onClick={resignConfirmation()} method="delete" action="menu">
+                        <form onClick={resignConfirmation()}>
                             <button id="resign">Resign game</button>
                         </form>
                     </div>

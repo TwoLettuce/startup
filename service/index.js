@@ -28,6 +28,14 @@ class User {
         this.wins = wins;
         this.losses = losses;
     }
+
+    incrementWins(){
+        this.wins++;
+    }
+
+    incrementLosses(){
+        this.losses++;
+    }
 }
 class AuthData {
     constructor (username, token){
@@ -117,12 +125,15 @@ apiRouter.post('/match', verifyAuth, (req, res) => {
     console.log('create game');
     const matchName = req.body.matchName;
     const id = generateUMID();
+    if (matchName == '') {
+        res.status(400).send({msg: "Please enter a match name"});
+    }
     if (id < 0) {
         res.status(400).send({msg: "No more games can be created."});
     } else {
         const newMatch = new Match(id, matchName);
         matches.push(newMatch);
-        res.send(id);
+        res.send({id: id});
     }
 });
 
@@ -132,13 +143,40 @@ apiRouter.put('/match', verifyAuth, async (req, res) => {
     const matchID = req.body.matchID;
     const match = matches.find(m => m.matchID == matchID);
     const matchIndex = matches.indexOf(match);
-    console.log(matchIndex + ": " + match);
-    if (req.body.playerNo === 1){
-        match.setPlayer1(authData.username);
-    } else if (req.body.playerNo === 2){
-        match.setPlayer2(authData.username);
+    if (matchIndex < 0) {
+        res.status(400).send({msg: "Not a valid gameID"})
+    } else {
+        if (req.body.playerNo === 1){
+                if (match.player1 != null){
+                    res.status(403).send({msg: "Already taken"})
+                } else {
+                    match.setPlayer1(authData.username);
+                }
+            } else if (req.body.playerNo === 2){
+                if (match.player2 != null){
+                    res.status(403).send({msg: "Already taken"})
+                } else {
+                    match.setPlayer2(authData.username);
+                }
+            }
+            matches[matchIndex] = match;
+            res.status(200).end();
     }
-    matches[matchIndex] = match;
+    
+});
+
+//Finish Match Endpoint
+apiRouter.put('/result', verifyAuth, async (req, res) => {
+    const authData = await findAuth('token', req.cookies[authCookieName]);
+    const user = users.find(u => u.username == authData.username);
+    const userIndex = users.indexOf(user);
+    if (req.body.victor){
+        user.incrementWins();
+    } else {
+        user.incrementLosses();
+    }
+    users[userIndex] = user;
+    res.end();
 })
 
 //generate an authentication token and send it back to client as a cookie
