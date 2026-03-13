@@ -5,20 +5,22 @@ import { Authenticated } from './Authenticated'
 import { Unauthenticated } from './Unauthenticated'
 
 export function Login(props) {
-  const [deals, setDeals] = React.useState([]);
+  const [quack, setQuack] = React.useState([]);
 
   React.useEffect(()=>{
-
-    fetch('/api/deals')
+    fetch('/api/duck')
       .then(async (response) => {
         return await response.json();
       })
       .then(data => {
         console.log(data);
-        setDeals(data)})
+        setQuack({
+          msg:data.message,
+          url:data.url});
+      })
       .catch(err => {
         console.log(err);
-        setDeals([]);
+        setQuack('https://random-d.uk/api/411.JPG');
       });
   },[]);
   
@@ -49,20 +51,10 @@ export function Login(props) {
 
     return (
       <section id="deals">
-        <h3>Current deals on Steam:</h3>
-        <div id="game-shark">
-          {deals && deals.length > 0 ? (
-            <ul>
-              {deals.slice(0, 5).map(d => (
-                <li key={d.dealID}>
-                  {d.title} - ${d.salePrice}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No deals found. Try again later.</p>
-          )}
-          <p>courtesy of CheapShark API</p>
+        <h3>Website Mascott:</h3>
+        <div id="quack">
+          <img className="duck" src={quack.url}/>
+          <p>{quack.msg}</p>
         </div>
       </section>
     );

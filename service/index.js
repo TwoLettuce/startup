@@ -97,11 +97,11 @@ apiRouter.post('/user', (req, res) => {
 //Login Endpoint
 apiRouter.post('/session', (req, res)=> {
     console.log('login, ' + req.body.username);
-    if (users.find((u) => u['username'] === req.body.username && u['password'] === req.body.password)){
+    if (users.find((u) => u['username'] == req.body.username && u['password'] == req.body.password)){
         createAuthCookie(req.body.username, res);
+        res.status(200).send({username: req.body.username});
     } else {
         res.status(409).send({msg: 'Invalid credentials!'});
-        res.send({username: req.body.username});
     }
 });
 
@@ -183,15 +183,16 @@ apiRouter.put('/result', verifyAuth, async (req, res) => {
 })
 
 //Deals endpoint
-apiRouter.get('/deals', async (req, res)=>{
-    fetch("https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15")
+apiRouter.get('/duck', async (req, res)=>{
+    fetch("https://random-d.uk/api/v2/quack")
       .then(async (response) => {
         return await response.json();
       })
       .then(data => res.send(data))
       .catch(err => {
         console.log(err);
-        res.send([]);
+        res.status(400);
+        res.send({name: err.name, message: err.message});
       });
 })
 

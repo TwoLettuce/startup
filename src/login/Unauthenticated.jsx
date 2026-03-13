@@ -43,14 +43,14 @@ export function Unauthenticated(props){
                 Password: 
                 <input name="password" type="password" placeholder="Password" value={password} onChange={(input)=> setPassword(input.target.value)}required/>
             </div>
-            <form id="login" method="get" action="menu">
+            <div id="login">
                 <button className="login_button" type="button" onClick={()=>loginUser()} disabled={(!username || !password)}>
                     Login
                 </button>
                 <button className="login_button" type="button" onClick={()=>registerUser()} disabled={(!username || !password)}>
                     Register
                 </button>
-            </form>
+            </div>
 
             <MessageDialog message={httpError} onHide={() => setHttpError(null)} />
         </section>
