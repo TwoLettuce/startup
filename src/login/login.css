@@ -46,7 +46,12 @@ footer {
     align-items: center;
 }
 
-#game-shark {
+.duck {
+    height: 20em;
+    width: 20;
+}
+
+#quack {
     display:flex;
     flex-direction: column;
     align-items:start;
