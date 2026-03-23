@@ -18,8 +18,12 @@ const authCollection = db.collection('auth');
   }
 })();
 
-function getUser(email) {
-  return userCollection.findOne({ email: email });
+async function addUser(user) {
+  await userCollection.insertOne(user);
+}
+
+function getUser(username) {
+  return userCollection.findOne({ username: username });
 }
 
 async function getUsers() {
@@ -27,19 +31,35 @@ async function getUsers() {
 }
 
 function getAuthDataByToken(token) {
-  return userCollection.findOne({ token: token });
-}
-
-async function addUser(user) {
-  await userCollection.insertOne(user);
+  return authCollection.findOne({ token: token });
 }
 
 async function updateUser(user) {
-  await userCollection.updateOne({ email: user.email }, { $set: user });
+  await userCollection.updateOne({ username: user.username }, { $set: user });
 }
 
 async function removeAuth(user) {
-  await userCollection.updateOne({ email: user.email }, { $unset: { token: 1 } });
+  await userCollection.removeOne({ token: user.token });
+}
+
+async function addMatch(match) {
+
+}
+
+async function updateMatch(match) {
+
+}
+
+async function removeMatch(match) {
+
+}
+
+async function getMatch() {
+
+}
+
+async function getMatches() {
+
 }
 
 
@@ -53,4 +73,9 @@ module.exports = {
   updateUser,
   removeAuth,
   getUsers,
+  addMatch,
+  updateMatch,
+  removeMatch,
+  getMatch,
+  getMatches
 };
