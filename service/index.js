@@ -231,7 +231,7 @@ function generateUMID(){
 
 async function findAuth(field, value){
     if (!value) return null;    
-    return authenticated.find((u) => u[field] === value);
+    return dataAccess.getAuthDataByToken(value);
 }
 
 // log when listening
