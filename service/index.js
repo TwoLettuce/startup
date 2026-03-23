@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
-const DB = require('./dataAccess.js')
+const dataAccess = require('./dataAccess.js')
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -90,7 +90,7 @@ apiRouter.post('/user', (req, res) => {
     } else {
         createAuthCookie(req.body.username, res);
         const newUser = new User(req.body.username, req.body.password, 0, 0);
-        users.push(newUser);
+        dataAccess.addUser(newUser);
         res.send({username: req.body.username});
     }
 });
@@ -207,7 +207,7 @@ function createAuthCookie(username, res){
         httpOnly: true,
         sameSite: 'strict'
     });
-    authenticated.push(newAuthData);
+    dataAccess.addAuth(newAuthData);
 }
 
 function generateUMID(){

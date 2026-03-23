@@ -6,6 +6,7 @@ const client = new MongoClient(url);
 const db = client.db('startup');
 const userCollection = db.collection('user');
 const authCollection = db.collection('auth');
+const matchCollection = db.collection('match');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -30,36 +31,40 @@ async function getUsers() {
   return userCollection;
 }
 
-function getAuthDataByToken(token) {
-  return authCollection.findOne({ token: token });
-}
-
 async function updateUser(user) {
   await userCollection.updateOne({ username: user.username }, { $set: user });
 }
 
-async function removeAuth(user) {
-  await userCollection.removeOne({ token: user.token });
+async function addAuth(auth){
+  await authCollection.insertOne(auth);
+}
+
+function getAuthDataByToken(token) {
+  return authCollection.findOne({ token: token });
+}
+
+async function removeAuth(auth) {
+  await userCollection.removeOne({ token: auth.token });
 }
 
 async function addMatch(match) {
-
+  await matchCollection.insertOne(match);
 }
 
 async function updateMatch(match) {
-
+  await matchCollection.updateOne({ matchID: match.matchID }, { $set: match });
 }
 
 async function removeMatch(match) {
-
+  await matchCollection.removeOne({ matchID: match.matchID });
 }
 
-async function getMatch() {
-
+async function getMatch(matchID) {
+  await matchCollection.findOne({ matchID: matchID });
 }
 
 async function getMatches() {
-
+  return matchCollection;
 }
 
 
@@ -69,8 +74,9 @@ async function getMatches() {
 module.exports = {
   addUser,
   getUser,
-  getAuthDataByToken,
   updateUser,
+  addAuth,
+  getAuthDataByToken,
   removeAuth,
   getUsers,
   addMatch,
