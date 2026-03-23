@@ -28,7 +28,7 @@ function getUser(username) {
 }
 
 async function getUsers() {
-  return userCollection;
+  return userCollection.find({}).toArray();
 }
 
 async function updateUser(user) {
@@ -64,7 +64,7 @@ async function getMatch(matchID) {
 }
 
 async function getMatches() {
-  return matchCollection;
+  return matchCollection.find({}).toArray();
 }
 
 

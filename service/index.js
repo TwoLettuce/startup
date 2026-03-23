@@ -73,7 +73,8 @@ const verifyAuth = async (req, res, next)=> {
 }
 
 //Test users endpoint
-apiRouter.get('/user', (req, res) => {
+apiRouter.get('/user', async (req, res) => {
+    const users = await dataAccess.getUsers();
     res.send(users);
 })
 
