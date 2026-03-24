@@ -39,6 +39,11 @@ async function addAuth(auth){
   await authCollection.insertOne(auth);
 }
 
+async function getAuthDatas(){
+  const auths = await authCollection.find({});
+  return auths;
+}
+
 function getAuthDataByToken(token) {
   return authCollection.findOne({ token: token });
 }
@@ -76,6 +81,7 @@ module.exports = {
   getUser,
   updateUser,
   addAuth,
+  getAuthDatas,
   getAuthDataByToken,
   removeAuth,
   getUsers,

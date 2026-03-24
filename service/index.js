@@ -16,8 +16,6 @@ app.use('/api', apiRouter);
 
 const authCookieName = 'authentication';
 
-let users = [];
-let authenticated = [];
 let matches = [];
 
 
@@ -79,13 +77,15 @@ apiRouter.get('/user', async (req, res) => {
 })
 
 //Test auth endpoint
-apiRouter.get('/authenticated', (req, res) => {
-    res.send(JSON.stringify(authenticated));
+apiRouter.get('/authenticated', async (req, res) => {
+    const matches = await dataAccess.getMatches();
+    res.send(JSON.stringify(matches));
 });
 
 //Register Endpoint
-apiRouter.post('/user', (req, res) => {
+apiRouter.post('/user', async (req, res) => {
     console.log('register, ' + req.body.username);
+    const users = await dataAccess.getUsers();
     if (users.find((u) => u['username'] === req.body.username)){
         res.status(409).send({msg: 'User with that Username already exists!'});
     } else {
@@ -97,8 +97,9 @@ apiRouter.post('/user', (req, res) => {
 });
 
 //Login Endpoint
-apiRouter.post('/session', (req, res)=> {
+apiRouter.post('/session', async (req, res)=> {
     console.log('login, ' + req.body.username);
+    const users = await dataAccess.getUsers();
     if (users.find((u) => u['username'] == req.body.username && u['password'] == req.body.password)){
         createAuthCookie(req.body.username, res);
         res.status(200).send({username: req.body.username});
@@ -112,6 +113,7 @@ apiRouter.delete('/session', verifyAuth, async (req, res)=> {
     const authData = await findAuth('token', req.cookies[authCookieName]);
 
     console.log('logout, ' + authData.username);
+    const authenticated = dataAccess.getAuthDatas();
     authenticated = authenticated.filter((auth) => auth['token'] !== req.cookies[authCookieName]);
     res.clearCookie(authCookieName);
     res.status(204).end();
