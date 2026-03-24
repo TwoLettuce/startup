@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
-const dataAccess = require('./dataAccess.js')
+const dataAccess = require('./dataAccess.js');
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -111,16 +111,15 @@ apiRouter.post('/session', async (req, res)=> {
 //Logout Endpoint
 apiRouter.delete('/session', verifyAuth, async (req, res)=> {
     const authData = await findAuth('token', req.cookies[authCookieName]);
-
     console.log('logout, ' + authData.username);
-    const authenticated = dataAccess.getAuthDatas();
-    authenticated = authenticated.filter((auth) => auth['token'] !== req.cookies[authCookieName]);
+    await dataAccess.removeAuth(authData);
     res.clearCookie(authCookieName);
     res.status(204).end();
 });
 
 //Get matches endpoint
-apiRouter.get('/match', (req, res) => {
+apiRouter.get('/match', async (req, res) => {
+    const matches = await dataAccess.getMatches();
     res.send(matches);
 });
 

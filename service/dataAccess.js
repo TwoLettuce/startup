@@ -49,7 +49,7 @@ function getAuthDataByToken(token) {
 }
 
 async function removeAuth(auth) {
-  await userCollection.removeOne({ token: auth.token });
+  await authCollection.deleteOne({ token: auth.token });
 }
 
 async function addMatch(match) {
