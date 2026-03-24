@@ -16,10 +16,6 @@ app.use('/api', apiRouter);
 
 const authCookieName = 'authentication';
 
-let matches = [];
-
-
-
 class User {
     constructor(username, password, wins, losses){
         this.username = username;
@@ -124,7 +120,7 @@ apiRouter.get('/match', async (req, res) => {
 });
 
 //create match endpoint
-apiRouter.post('/match', verifyAuth, (req, res) => {
+apiRouter.post('/match', verifyAuth, async (req, res) => {
     console.log('create game');
     const matchName = req.body.matchName;
     const id = generateUMID();
@@ -135,7 +131,7 @@ apiRouter.post('/match', verifyAuth, (req, res) => {
         res.status(400).send({msg: "No more games can be created."});
     } else {
         const newMatch = new Match(id, matchName);
-        matches.push(newMatch);
+        await dataAccess.addMatch(newMatch);
         res.send({id: id});
     }
 });
@@ -144,8 +140,10 @@ apiRouter.post('/match', verifyAuth, (req, res) => {
 apiRouter.put('/match', verifyAuth, async (req, res) => {
     const authData = await findAuth('token', req.cookies[authCookieName]);
     const matchID = req.body.matchID;
+    const matches = await dataAccess.getMatches();
     const match = matches.find(m => m.matchID == matchID);
     const matchIndex = matches.indexOf(match);
+    let updatedMatch;
     if (matchIndex < 0) {
         res.status(400).send({msg: "Not a valid gameID"})
     } else {
@@ -153,19 +151,18 @@ apiRouter.put('/match', verifyAuth, async (req, res) => {
                 if (match.player1 != null){
                     res.status(403).send({msg: "Already taken"})
                 } else {
-                    match.setPlayer1(authData.username);
+                    updatedMatch = new Match(match.matchID, match.matchName, authData.username, match.player2);
                 }
             } else if (req.body.playerNo === 2){
                 if (match.player2 != null){
                     res.status(403).send({msg: "Already taken"})
                 } else {
-                    match.setPlayer2(authData.username);
+                    updatedMatch = new Match(match.matchID, match.matchName, match.player1, authData.username);
                 }
             }
-            matches[matchIndex] = match;
+            await dataAccess.updateMatch(updatedMatch);
             res.status(200).end();
     }
-    
 });
 
 //Finish Match Endpoint
@@ -185,7 +182,7 @@ apiRouter.put('/result', verifyAuth, async (req, res) => {
     res.end();
 })
 
-//Deals endpoint
+//Duck endpoint
 apiRouter.get('/duck', async (req, res)=>{
     fetch("https://random-d.uk/api/v2/quack")
       .then(async (response) => {

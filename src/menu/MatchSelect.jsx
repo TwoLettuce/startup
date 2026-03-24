@@ -19,6 +19,32 @@ export function MatchSelect(props){
     }, []
     );
 
+
+    React.useEffect(()=>
+    {
+        async function reload(){
+            await reloadMatches();
+        }
+        reload();
+    }, []
+    );
+
+    async function reloadMatches(){
+        const response = await fetch('/api/match', {
+            method: 'get',
+            headers : {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        });
+
+        const body = await response.json();
+        if (response.status === 200) {
+            setMatches(body);
+        } else {
+            console.log(`⚠ Error: ${body.msg}`);
+        }
+    }
+
     async function addNewMatch(matchName){
         document.getElementById('create_button').value = '';
         setGameName('');
@@ -31,7 +57,7 @@ export function MatchSelect(props){
         });
         const body = await response.json();
         if (response.status === 200){
-            reloadMatches();
+            await reloadMatches();
             setHttpError(`Game created with id: ${body.id}`);
         } else {
             setHttpError(`⚠ Error: ${body.msg}`);
@@ -68,14 +94,7 @@ export function MatchSelect(props){
                 queriedMatches.push(match);
             }
         }
-
         return queriedMatches;
-    }
-
-    async function reloadMatches(){
-        fetch('api/match')
-            .then((response)=>response.json())
-            .then((matches)=>setMatches(matches));
     }
 
     return (
