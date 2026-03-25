@@ -10,14 +10,25 @@ export function MatchSelect(props){
     const [queriedID, setQueriedID] = React.useState('');
     const [httpError, setHttpError] = React.useState(null);
 
+
+    React.useEffect(() => 
+    {
+        const intervalId = setInterval(() => {
+            reloadMatches();
+        }, 10000);
+        return () => 
+        {
+            clearInterval(intervalId);
+        };
+    }, []);
+
     React.useEffect(()=>
     {
         async function reload(){
             await reloadMatches();
         }
         reload();
-    }, []
-    );
+    }, []);
 
 
     React.useEffect(()=>

@@ -8,7 +8,7 @@ export function Defeat(props){
                 You Lose!
             </h2>
             <p>Your health: {props.finalPlayerHealth}</p>
-            <p>Enemy health: {props.finalEnemyHealth}</p>s
+            <p>Enemy health: {props.finalEnemyHealth}</p>
             <ReturnToMenu victor={props.victor} matchID={props.matchID}/>
         </div>
     )

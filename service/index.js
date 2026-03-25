@@ -87,7 +87,7 @@ apiRouter.post('/user', async (req, res) => {
     } else {
         createAuthCookie(req.body.username, res);
         const newUser = new User(req.body.username, req.body.password, 0, 0);
-        dataAccess.addUser(newUser);
+        await dataAccess.addUser(newUser);
         res.send({username: req.body.username});
     }
 });
@@ -123,7 +123,7 @@ apiRouter.get('/match', async (req, res) => {
 apiRouter.post('/match', verifyAuth, async (req, res) => {
     console.log('create game');
     const matchName = req.body.matchName;
-    const id = generateUMID();
+    const id = await generateUMID();
     if (matchName == '') {
         res.status(400).send({msg: "Please enter a match name"});
     }
@@ -168,17 +168,19 @@ apiRouter.put('/match', verifyAuth, async (req, res) => {
 //Finish Match Endpoint
 apiRouter.put('/result', verifyAuth, async (req, res) => {
     const authData = await findAuth('token', req.cookies[authCookieName]);
+    const users = await dataAccess.getUsers();
     const user = users.find(u => u.username == authData.username);
-    const userIndex = users.indexOf(user);
+    let updatedUser;
     if (req.body.victor){
-        user.incrementWins();
+        updatedUser = new User(user.username, user.password, user.wins+1, user.losses);
     } else {
-        user.incrementLosses();
+        updatedUser = new User(user.username, user.password, user.wins, user.losses+1);
     }
-    users[userIndex] = user;
+
+    await dataAccess.updateUser(updatedUser);
 
     console.log("Deleting match " + req.body.matchID);
-    matches = matches.filter(m => m.matchID != req.body.matchID);
+    await dataAccess.removeMatch(req.body.matchID);
     res.end();
 })
 
@@ -197,7 +199,7 @@ apiRouter.get('/duck', async (req, res)=>{
 })
 
 //generate an authentication token and send it back to client as a cookie
-function createAuthCookie(username, res){
+async function createAuthCookie(username, res){
     const newAuthData = new AuthData(username, uuid.v4());
     console.log(newAuthData);
     res.cookie(authCookieName, newAuthData.token, {
@@ -206,10 +208,10 @@ function createAuthCookie(username, res){
         httpOnly: true,
         sameSite: 'strict'
     });
-    dataAccess.addAuth(newAuthData);
+    await dataAccess.addAuth(newAuthData);
 }
 
-function generateUMID(){
+async function generateUMID(){
     let id;
     let iters = 0;
 
@@ -217,6 +219,7 @@ function generateUMID(){
         iters++;
         id = Math.floor(Math.random()*1000)
         let unique = true;
+        const matches = await dataAccess.getMatches();
         for (const match of matches){
             unique = match.matchID === id ? false : true;
             if (!unique) break;
@@ -230,7 +233,8 @@ function generateUMID(){
 
 async function findAuth(field, value){
     if (!value) return null;    
-    return dataAccess.getAuthDataByToken(value);
+    const auth = await dataAccess.getAuthDataByToken(value);
+    return auth;
 }
 
 // log when listening

@@ -60,8 +60,8 @@ async function updateMatch(match) {
   await matchCollection.updateOne({ matchID: match.matchID }, { $set: match });
 }
 
-async function removeMatch(match) {
-  await matchCollection.removeOne({ matchID: match.matchID });
+async function removeMatch(matchID) {
+  await matchCollection.deleteOne({ matchID: Number(matchID) });
 }
 
 async function getMatch(matchID) {
