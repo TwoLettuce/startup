@@ -69,7 +69,7 @@ async function getMatch(matchID) {
 }
 
 async function getMatches() {
-  await matchCollection.find({}).toArray();
+  return matchCollection.find({}).toArray();
 }
 
 

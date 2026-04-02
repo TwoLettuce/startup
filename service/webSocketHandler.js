@@ -1,6 +1,6 @@
 const { WebSocketServer, WebSocket } = require('ws');
 
-function peerProxy(httpServer) {
+function webSocketHandler(httpServer) {
   // Create a websocket object
   const socketServer = new WebSocketServer({ server: httpServer });
 
@@ -14,6 +14,22 @@ function peerProxy(httpServer) {
           client.send(data);
         }
       });
+    });
+
+    socket.on('connect', function sendConnectionMessage(connectionMessage) {
+        socketServer.clients.forEach((client) => {
+            if (client !== socket && client.readyState === WebSocket.OPEN) {
+                client.send(data);
+            }
+        })
+    })
+
+    socket.on('move', function sendMove(move) {
+        socketServer.clients.forEach((client) => {
+            if (client !== socket && client.readyState === WebSocket.OPEN) {
+                client.send(data);
+            }
+        });
     });
 
     // Respond to pong messages by marking the connection alive
@@ -33,4 +49,4 @@ function peerProxy(httpServer) {
   }, 10000);
 }
 
-module.exports = { peerProxy };
+module.exports = { webSocketHandler };
