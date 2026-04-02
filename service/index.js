@@ -4,6 +4,7 @@ const express = require('express');
 const uuid = require('uuid');
 const app = express();
 const dataAccess = require('./dataAccess.js');
+const webSocketHandler = require('./webSocketHandler.js');
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -64,13 +65,13 @@ const verifyAuth = async (req, res, next)=> {
     } else {
         res.status(401).send({msg: 'Unauthorized'})
     }
-}
+};
 
 //Test users endpoint
 apiRouter.get('/user', async (req, res) => {
     const users = await dataAccess.getUsers();
     res.send(users);
-})
+});
 
 //Test auth endpoint
 apiRouter.get('/authenticated', async (req, res) => {
@@ -238,7 +239,8 @@ async function findAuth(field, value){
 }
 
 // log when listening
-app.listen(port, () => {
+const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+webSocketHandler(httpService);

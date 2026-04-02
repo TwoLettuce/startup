@@ -69,9 +69,8 @@ async function getMatch(matchID) {
 }
 
 async function getMatches() {
-  return matchCollection.find({}).toArray();
+  await matchCollection.find({}).toArray();
 }
-
 
 
 
