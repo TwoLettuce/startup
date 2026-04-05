@@ -22,6 +22,12 @@ function webSocketHandler(httpServer) {
           sendMsgAll(socketServer, data);
         case 'move':
           sendMsg(socketServer, data);
+        case 'select':
+          sendMsg(socketServer, data);
+        case 'system':
+          sendMsgAll(socketServer, data);
+        default:
+          sendMsgAll(socketServer, data);
       }
     });
 
@@ -45,8 +51,6 @@ function webSocketHandler(httpServer) {
         }
       });
     }
-
-
 
     // Respond to pong messages by marking the connection alive
     socket.on('pong', () => {
