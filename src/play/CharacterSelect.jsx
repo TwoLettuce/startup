@@ -7,7 +7,7 @@ export function CharacterSelect(props){
     
     function characterSelected(character){
         props.setCharacter(character);
-        props.setEnemyCharacter(Character.Wizard);
+        props.setEnemyCharacter(Character.Dragon);
         setSelected(true);
     } 
 

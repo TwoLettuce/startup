@@ -59,7 +59,7 @@ export function Gameplay(props) {
                     message = `${event.from} is blocking.`
                     break;
                 default:
-                    message = 'unknown';
+                    message = event;
                     break;
             } 
 
@@ -111,7 +111,6 @@ export function Gameplay(props) {
     );
 
     function onPressed(move) {
-        GameNotifier.broadcastEvent(new EventMessage(move.username, GameEvent.Move, move));
         let playerHealthChange = 0;
         let enemyHealthChange = 0;
         let enemyMove = generateMove();
@@ -153,7 +152,7 @@ export function Gameplay(props) {
                 } else {
                     console.log("oof! miss!");
                 }
-                playerHealthChange+=move.power*2;
+                playerHealthChange+=move.power;
             } else if (move.type === 'burn'){
                 setEnemyBurning(3);
                 console.log("Enemy now burning");
@@ -202,10 +201,10 @@ export function Gameplay(props) {
             } else {
                 console.log("enemy miss!");
             }
-            enemyHealthChange+=enemyMove.power*2;
+            enemyHealthChange+=enemyMove.power;
         } else if (enemyMove.type === 'burn'){
             setPlayerBurning(3);
-            console.log("Enemy now burning");
+            console.log("Player now burning");
         }
         if (playerBurning) {
             setPlayerBurning(playerBurning-1);

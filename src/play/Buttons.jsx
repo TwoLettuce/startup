@@ -34,7 +34,7 @@ export function Buttons(props){
                 </button>
                 <button className="play_button" onClick={()=>props.onPressed(new Move("Faithful Appeal", "heal", 10, 0, 5))}>
                     <h4>Faithful Appeal</h4>
-                    Heal 10 HP. If you took no damage this turn, heal another 10
+                    Heal 10 HP.
                 </button>
             </div>
         )
@@ -59,7 +59,7 @@ export function Buttons(props){
                 <button className="play_button" onClick={()=>props.onPressed(new Move("Siphon Life", "hybrid", 5, 100, -5))}>
                     <h4>Siphon Life</h4>
                     Accuracy: 100%  &#13;
-                    Deal 5 damage and recover 10 HP and 5 MP
+                    Deal 5 damage and recover 5 HP and 5 MP
                 </button>
             </div>
         )
