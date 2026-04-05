@@ -81,7 +81,6 @@ apiRouter.get('/authenticated', async (req, res) => {
 
 //Register Endpoint
 apiRouter.post('/user', async (req, res) => {
-    console.log('register, ' + req.body.username);
     const users = await dataAccess.getUsers();
     if (users.find((u) => u['username'] === req.body.username)){
         res.status(409).send({msg: 'User with that Username already exists!'});
@@ -95,7 +94,6 @@ apiRouter.post('/user', async (req, res) => {
 
 //Login Endpoint
 apiRouter.post('/session', async (req, res)=> {
-    console.log('login, ' + req.body.username);
     const users = await dataAccess.getUsers();
     if (users.find((u) => u['username'] == req.body.username && u['password'] == req.body.password)){
         createAuthCookie(req.body.username, res);
@@ -108,7 +106,6 @@ apiRouter.post('/session', async (req, res)=> {
 //Logout Endpoint
 apiRouter.delete('/session', verifyAuth, async (req, res)=> {
     const authData = await findAuth('token', req.cookies[authCookieName]);
-    console.log('logout, ' + authData.username);
     await dataAccess.removeAuth(authData);
     res.clearCookie(authCookieName);
     res.status(204).end();
@@ -122,7 +119,6 @@ apiRouter.get('/match', async (req, res) => {
 
 //create match endpoint
 apiRouter.post('/match', verifyAuth, async (req, res) => {
-    console.log('create game');
     const matchName = req.body.matchName;
     const id = await generateUMID();
     if (matchName == '') {
@@ -180,7 +176,6 @@ apiRouter.put('/result', verifyAuth, async (req, res) => {
 
     await dataAccess.updateUser(updatedUser);
 
-    console.log("Deleting match " + req.body.matchID);
     await dataAccess.removeMatch(req.body.matchID);
     res.end();
 })
@@ -202,7 +197,6 @@ apiRouter.get('/duck', async (req, res)=>{
 //generate an authentication token and send it back to client as a cookie
 async function createAuthCookie(username, res){
     const newAuthData = new AuthData(username, uuid.v4());
-    console.log(newAuthData);
     res.cookie(authCookieName, newAuthData.token, {
         maxAge: 100 * 60 * 60 * 24 * 365,
         secure : true,

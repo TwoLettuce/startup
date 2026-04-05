@@ -1,7 +1,7 @@
 import React from "react";
 import { Buttons } from "./Buttons";
 import { WebSocketText } from './WebSocketText';
-import { GameEvent, GameNotifier } from './GameNotifier';
+import { GameEvent, GameNotifier, EventMessage } from './GameNotifier';
 import { Character } from "./Character";
 import { Move } from "./Buttons";
 
@@ -111,6 +111,7 @@ export function Gameplay(props) {
     );
 
     function onPressed(move) {
+        GameNotifier.broadcastEvent(new EventMessage(move.username, GameEvent.Move, move));
         let playerHealthChange = 0;
         let enemyHealthChange = 0;
         let enemyMove = generateMove();

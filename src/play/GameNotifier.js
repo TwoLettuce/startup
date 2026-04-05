@@ -1,5 +1,6 @@
 const GameEvent = {
   System: 'system',
+  Connect: 'connect',
   End: 'gameOver',
   Move: 'move',
   Select: 'characterSelect',
@@ -26,12 +27,12 @@ class GameEventNotifier {
     let port = window.location.port;
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
-    this.socket.onopen = (event) => {
+    this.socket.onopen = async (event) => {
       const msg = new EventMessage('System', GameEvent.System, 'connected')
       this.receiveEvent(msg);
     };
 
-    this.socket.onclose = (event) => {
+    this.socket.onclose = async (event) => {
       this.receiveEvent(new EventMessage('Simon', GameEvent.System, { msg: 'disconnected' }));
     };
     
@@ -41,12 +42,6 @@ class GameEventNotifier {
         this.receiveEvent(event);
       } catch {}
     };
-
-    // Simulate chat messages that will eventually come over WebSocket
-    setInterval(() => {
-      const userName = 'Dr. Jensen';
-      this.broadcastEvent(userName, GameEvent.Move, {});
-    }, 5000);
   }
 
   broadcastEvent(from, type, value) {
@@ -76,4 +71,4 @@ class GameEventNotifier {
 }
 
 const GameNotifier = new GameEventNotifier();
-export { GameEvent, GameNotifier };
+export { GameEvent, GameNotifier, EventMessage };
