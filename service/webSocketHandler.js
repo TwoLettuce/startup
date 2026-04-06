@@ -27,9 +27,6 @@ function webSocketHandler(httpServer) {
         case 'move':
           sendMsg(socketServer, data);
           break;
-        case 'select':
-          sendMsg(socketServer, data);
-          break;
         case 'characterSelect':
           sendMsg(socketServer, data);
           break;
@@ -59,7 +56,7 @@ function webSocketHandler(httpServer) {
     function sendMsg(socketServer, msg) {
       socketServer.clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
-          client.send(msg);
+          client.send(JSON.stringify(msg));
         }
       });
     }

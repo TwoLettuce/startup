@@ -1,7 +1,7 @@
 import React from "react";
 import { ReturnToMenu } from './ReturnToMenu'
 export function Victory(props){
-
+    props.notify();
     return (
         <div>
             <h2 className='victory_text'>

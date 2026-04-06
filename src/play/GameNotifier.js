@@ -44,6 +44,14 @@ class GameEventNotifier {
     };
   }
 
+  assignCharacterFunction(setCharacter){
+    this.setCharacter = (val) => setCharacter(val);
+  }
+
+  assignEnemyNameFunction(setEnemyName){
+    this.setEnemyName = (val) => setEnemyName(val)
+  }
+
   broadcastEvent(from, type, value) {
     const event = new EventMessage(from, type, value);
     this.socket.send(JSON.stringify(event));

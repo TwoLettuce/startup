@@ -2,6 +2,7 @@ import React from 'react';
 import { ReturnToMenu } from './ReturnToMenu';
 
 export function Defeat(props){
+    props.notify();
      return (
         <div>
             <h2 className='defeat_text'>

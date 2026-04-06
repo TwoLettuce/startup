@@ -33,6 +33,7 @@ class User {
         this.losses++;
     }
 }
+
 class AuthData {
     constructor (username, token){
         this.username = username;
