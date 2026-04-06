@@ -30,16 +30,6 @@ export function MatchSelect(props){
         reload();
     }, []);
 
-
-    React.useEffect(()=>
-    {
-        async function reload(){
-            await reloadMatches();
-        }
-        reload();
-    }, []
-    );
-
     async function reloadMatches(){
         const response = await fetch('/api/match', {
             method: 'get',

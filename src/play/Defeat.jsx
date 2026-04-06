@@ -2,7 +2,6 @@ import React from 'react';
 import { ReturnToMenu } from './ReturnToMenu';
 
 export function Defeat(props){
-    props.notify();
      return (
         <div>
             <h2 className='defeat_text'>
@@ -10,7 +9,7 @@ export function Defeat(props){
             </h2>
             <p>Your health: {props.finalPlayerHealth}</p>
             <p>Enemy health: {props.finalEnemyHealth}</p>
-            <ReturnToMenu victor={props.victor} matchID={props.matchID}/>
+            <ReturnToMenu victor={props.victor} matchID={props.matchID} notify={props.notify}/>
         </div>
     )
 }

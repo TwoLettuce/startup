@@ -4,6 +4,7 @@ import { Leaderboard } from './Leaderboard';
 import { MatchSelect } from './MatchSelect';
 import { WebSocketText } from '../play/WebSocketText';
 import { GameEvent, GameNotifier } from '../play/GameNotifier'
+import { useCallback } from 'react';
 
 export function Menu(props) {
   const [events, setEvent] = React.useState([]);
@@ -12,6 +13,26 @@ export function Menu(props) {
   React.useEffect(()=> {
           GameNotifier.addHandler(handleGameEvent);
           GameNotifier.broadcastEvent(props.username, GameEvent.Connect, {});
+
+
+          const lossFunction = () => {
+            console.log("bruh!!!");
+            GameNotifier.broadcastEvent(
+              props.username, GameEvent.End, "'s courage faltered!"
+            );
+          };
+
+          const winFunction = () => {
+            console.log("bruh!!!");
+            GameNotifier.broadcastEvent(
+              props.username, GameEvent.End, " reigned victorious!"
+            );
+          };
+
+          props.setLossFunction(lossFunction);
+
+          props.setWinFunction(winFunction);
+
           return ()=>{GameNotifier.removeHandler(handleGameEvent)};
       },
       []
@@ -33,51 +54,23 @@ export function Menu(props) {
       let message;
       switch (event.type){
         case GameEvent.End:
-          message = `Game Over!`;
-          break;
-        case GameEvent.Select:
-          message = `${event.from} has selected their character!`;
+          message = `${event.from}${event.value}`;
           break;
         case GameEvent.System:
           message = event.value.msg;
-          break;
-        case GameEvent.Move:
-          message = `${event.from} has selected their move!`;
-          break;
-        case GameEvent.Mana:
-          message = "Not enough Mana, peasant!";
-          break;
-        case GameEvent.Damaged:
-          message = `${event.from} took ${event.value.dmg} damage`
-          break;
-        case GameEvent.Healed:
-          message = `${event.from} healed ${event.value.heal} HP`
-          break;
-        case GameEvent.Blocking:
-          message = `${event.from} is blocking.`
           break;
         case GameEvent.Connect:
           message = `${event.from} is looking for a challenger!`
           break;
         default:
-          message = event;
-          break;
+          continue;          
       } 
       messageArray.push(message);
     }
     return messageArray;
 }
 
-props.setLossFunction(()=>  GameNotifier.broadcastEvent(
-    props.username, GameEvent.End, "'s courage faltered!"
-  )
-);
-
-props.setWinFunction(()=>
-  GameNotifier.broadcastEvent(
-    props.username, GameEvent.End, " reigned victorious!"
-  )
-);
+  
 
 
   return (

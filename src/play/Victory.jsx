@@ -1,7 +1,6 @@
 import React from "react";
 import { ReturnToMenu } from './ReturnToMenu'
 export function Victory(props){
-    props.notify();
     return (
         <div>
             <h2 className='victory_text'>
@@ -11,7 +10,7 @@ export function Victory(props){
                 <p>Your health: {props.finalPlayerHealth}</p>
                 <p>Enemy health: {props.finalEnemyHealth}</p>
             </div>
-            <ReturnToMenu victor={props.victor} matchID={props.matchID}/>
+            <ReturnToMenu victor={props.victor} matchID={props.matchID} notify={props.notify}/>
         </div>
     )
 }

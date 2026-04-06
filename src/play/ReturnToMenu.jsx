@@ -5,6 +5,11 @@ import { useNavigate } from 'react-router-dom';
 export function ReturnToMenu(props){
     const navigate = useNavigate();
 
+    async function updates(){
+        await updateWinsAndLosses();
+        props.notify();
+    }
+
     async function updateWinsAndLosses(){
         await fetch('/api/result', {
             method: 'put',
@@ -18,7 +23,7 @@ export function ReturnToMenu(props){
     
     return (
         <div className="post_game_button" >
-            <button onClick={()=>updateWinsAndLosses()}>Return to Menu</button>
+            <button onClick={updates}>Return to Menu</button>
         </div>
     )
 }
