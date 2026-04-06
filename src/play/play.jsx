@@ -56,8 +56,8 @@ export function Play(props) {
                     </div>
                 </div>
             }
-            {gameWon && <Victory victor={true} matchID={props.matchID} finalPlayerHealth={finalPlayerHealth} finalEnemyHealth={finalEnemyHealth} notify={props.notifyLoss}/>}
-            {gameLost && <Defeat victor={false} matchID={props.matchID} finalPlayerHealth={finalPlayerHealth} finalEnemyHealth={finalEnemyHealth} notify={props.notifyWin}/>}
+            {gameWon && <Victory victor={true} matchID={props.matchID} finalPlayerHealth={finalPlayerHealth} finalEnemyHealth={finalEnemyHealth} notify={props.notifyWin}/>}
+            {gameLost && <Defeat victor={false} matchID={props.matchID} finalPlayerHealth={finalPlayerHealth} finalEnemyHealth={finalEnemyHealth} notify={props.notifyLoss}/>}
             
         </main>
     );

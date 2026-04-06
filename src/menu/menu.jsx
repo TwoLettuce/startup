@@ -4,7 +4,6 @@ import { Leaderboard } from './Leaderboard';
 import { MatchSelect } from './MatchSelect';
 import { WebSocketText } from '../play/WebSocketText';
 import { GameEvent, GameNotifier } from '../play/GameNotifier'
-import { useCallback } from 'react';
 
 export function Menu(props) {
   const [events, setEvent] = React.useState([]);
@@ -13,18 +12,19 @@ export function Menu(props) {
   React.useEffect(()=> {
           GameNotifier.addHandler(handleGameEvent);
           GameNotifier.broadcastEvent(props.username, GameEvent.Connect, {});
+          GameNotifier.receiveEvent('system', GameEvent.System, "You are connected!");
 
 
           const lossFunction = () => {
             console.log("bruh!!!");
-            GameNotifier.broadcastEvent(
+            return () => GameNotifier.broadcastEvent(
               props.username, GameEvent.End, "'s courage faltered!"
             );
           };
 
           const winFunction = () => {
             console.log("bruh!!!");
-            GameNotifier.broadcastEvent(
+            return () => GameNotifier.broadcastEvent(
               props.username, GameEvent.End, " reigned victorious!"
             );
           };
