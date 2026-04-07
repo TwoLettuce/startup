@@ -22,7 +22,7 @@ function webSocketHandler(httpServer) {
       console.log('type ' + msg.type);
       switch (msg.type) {
         case 'connect':
-          sendMsgAll(socketServer, data);
+          sendMsg(socketServer, data);
           break;
         case 'move':
           sendMsg(socketServer, data);
@@ -55,8 +55,8 @@ function webSocketHandler(httpServer) {
 
     function sendMsg(socketServer, msg) {
       socketServer.clients.forEach((client) => {
-        if (client !== socket && client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify(msg));
+        if (client !== socket && client.readyState == WebSocket.OPEN) {
+          client.send(msg);
         }
       });
     }
