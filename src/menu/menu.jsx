@@ -7,18 +7,25 @@ import { EventMessage, GameEvent, GameNotifier } from '../play/GameNotifier'
 
 export function Menu(props) {
   const [events, setEvent] = React.useState([]);
+  const [messages, setMessages] = React.useState([]);
+
+  React.useEffect(() => {
+    setMessages(loadMessages());
+  }, [events]);
 
 
   React.useEffect(()=> {
           GameNotifier.addHandler(handleGameEvent);
           GameNotifier.broadcastEvent(props.username, GameEvent.Connect, {});
-          GameNotifier.receiveEvent(new EventMessage('system', GameEvent.System, "You are connected!"));
-
+          if (!props.hasConnected){
+            GameNotifier.receiveEvent(new EventMessage('system', GameEvent.System, "You are connected!"));
+            props.setHasConnected(true);
+          }
 
           const lossFunction = () => {
             console.log("bruh!!!");
             return () => GameNotifier.broadcastEvent(
-              props.username, GameEvent.End, "'s courage faltered!"
+              props.username +'\'s', GameEvent.End, " courage faltered!"
             );
           };
 
@@ -60,8 +67,9 @@ export function Menu(props) {
         case GameEvent.End:
           if (event.from == props.username){
             message = `${'You'}${event.value}`
+          } else {
+            message = `${event.from}${event.value}`;
           }
-          message = `${event.from}${event.value}`;
           break;
         case GameEvent.System:
           message = event.value;
@@ -84,7 +92,7 @@ export function Menu(props) {
     <main className="menu_main">
       <Leaderboard username={props.username} />
       <div id="websocket-textbox">
-        <WebSocketText messages={loadMessages()} />
+        <WebSocketText messages={messages} />
       </div>
       <MatchSelect username={props.username} setMatchID={props.setMatchID}/>
     </main>

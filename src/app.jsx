@@ -16,6 +16,7 @@ export default function App() {
     const [authState, setAuthState] = React.useState(username ? AuthState.Authenticated : AuthState.Unauthenticated);
     const [winFunction, setWinFunction] = React.useState(()=>console.log('unset'));
     const [lossFunction, setLossFunction] = React.useState(()=>console.log('unset'));
+    const [hasConnected, setHasConnected] = React.useState(false);
 
 
     const onAuthChange = (username, authState) => {
@@ -65,7 +66,7 @@ export default function App() {
                         authState = {authState}
                         onAuthChange={onAuthChange}
                     />} exact />
-                <Route path='/menu' element={<Menu username={username} setMatchID={setMatchID} setWinFunction={setWinFunction} setLossFunction={setLossFunction} />} exact />
+                <Route path='/menu' element={<Menu username={username} setMatchID={setMatchID} setWinFunction={setWinFunction} setLossFunction={setLossFunction} hasConnected={hasConnected} setHasConnected={setHasConnected} />} exact />
                 <Route path='/play' element={<Play username={username} matchID={matchID} notifyWin={winFunction} notifyLoss={lossFunction}/>} exact />
                 <Route path='*' element={<NotFound />} exact />
             </Routes>
