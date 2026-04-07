@@ -25,7 +25,7 @@ export function Menu(props) {
           const lossFunction = () => {
             console.log("bruh!!!");
             return () => GameNotifier.broadcastEvent(
-              props.username +'\'s', GameEvent.End, " courage faltered!"
+              props.username, GameEvent.End, "'s courage faltered!"
             );
           };
 
@@ -66,7 +66,11 @@ export function Menu(props) {
       switch (event.type){
         case GameEvent.End:
           if (event.from == props.username){
-            message = `${'You'}${event.value}`
+            if (event.value.includes("courage")){
+              message = `${'Your'}${' courage faltered!'}`
+            } else {
+              message = `${'You'}${event.value}`
+            }
           } else {
             message = `${event.from}${event.value}`;
           }
