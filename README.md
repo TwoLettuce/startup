@@ -143,10 +143,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
       
 ## 🚀 WebSocket deliverable
 
+***Note:*** My original web application design's use of websocket was too complicated for the scope of this class, so I decided to demonstrate my mastery of websocket in a way that I hadn't originally intended. Instead of connecting with another user over a match, you'll just get messages in the menu when there are other users doing things like completing games or entering the menu.
+
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - Backend echoes messages to other users
+- [x] **Frontend makes WebSocket connection** - Frontend listens for messages from other users and displays them in the menu
+- [x] **Data sent over WebSocket connection** - When in the menu, you'll get a notification if another user enters the menu and also when they complete a match. The message varies if they win or lose
+- [x] **WebSocket data displayed** - The textarea in the middle of the menu displays the websocket messages.
+- [x] **Application is fully functional** - The application doesn't have the original design I had planned for it but it works
