@@ -23,7 +23,6 @@ Here's an image:
 ![Image of lots of pizza](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQSkkWlEzBaU3vtaqP2Pi5Zr4gyLkUA3_qQA&s)
 
 
-
 Here's some code:
 ``` java
 for (TherapyRobot therapyRobot : robotList){
@@ -43,6 +42,6 @@ Here's a task list to work through:
 - [ ] Take the bus home
 - [ ] Do homework
 - [ ] Eat Pizza
-- [ ] play videogames
+- [X] play videogames
 - [ ] get ready for bed
 - [ ] go to sleep
